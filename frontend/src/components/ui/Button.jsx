@@ -14,6 +14,9 @@ function Button({
 
     ghost:
       "text-[#556B2F] hover:bg-[#556B2F]/10",
+
+    white:
+    "bg-white text-[#556B2F] hover:bg-gray-100 shadow-md",
   };
 
   return (
