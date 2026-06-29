@@ -8,7 +8,7 @@ function Navbar() {
     <nav className="bg-white shadow-sm border-b border-stone-200">
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         <h1 className="text-2xl font-bold text-[#556B2F]">
-          🏆 BracketFlow
+          SportsTracker
         </h1>
 
         <div className="flex gap-8">
