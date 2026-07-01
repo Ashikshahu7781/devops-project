@@ -10,9 +10,15 @@ import Fixtures from "../pages/Fixtures";
 import Standings from "../pages/Standings";
 import About from "../pages/About";
 
+import Login from "../pages/Login/Login";
+import Register from "../pages/Register/Register";
+import Dashboard from "../pages/Dashboard/Dashboard";
+
 function AppRoutes() {
   return (
     <Routes>
+
+      {/* Website */}
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="tournaments" element={<Tournaments />} />
@@ -22,6 +28,14 @@ function AppRoutes() {
         <Route path="standings" element={<Standings />} />
         <Route path="about" element={<About />} />
       </Route>
+
+      {/* Authentication */}
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+
+      {/* Dashboard */}
+      <Route path="/dashboard" element={<Dashboard />} />
+
     </Routes>
   );
 }

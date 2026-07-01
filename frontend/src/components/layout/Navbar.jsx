@@ -35,6 +35,20 @@ function Navbar() {
           <NavLink className={linkStyle} to="/about">
             About
           </NavLink>
+
+         <NavLink
+           to="/login"
+           className="px-5 py-2 rounded-xl border border-[#556B2F] text-[#556B2F] font-semibold hover:bg-[#556B2F] hover:text-white transition"
+            >
+            Login
+          </NavLink>
+
+          <NavLink
+            to="/register"
+            className="px-5 py-2 rounded-xl bg-[#556B2F] text-white font-semibold hover:bg-[#445624] transition"
+              >
+            Register
+          </NavLink>
         </div>
       </div>
     </nav>

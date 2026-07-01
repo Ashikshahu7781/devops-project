@@ -22,7 +22,7 @@ import actionPlayer from "./players/action.png";
 import celebrationPlayer from "./players/celebration.png";
 
 // Logo
-import logo from "./logos/logo.svg";
+import logo from "./logos/favicon.ico";
 
 export {
   heroBanner,

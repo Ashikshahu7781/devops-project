@@ -34,7 +34,7 @@ function Button({
         transition-all
         duration-300
         cursor-pointer
-        ${variants[variant]}
+        ${variants[variant] || variants.primary}
         ${className}
       `}
       {...props}
