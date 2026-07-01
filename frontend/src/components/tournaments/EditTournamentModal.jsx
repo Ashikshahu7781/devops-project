@@ -1,7 +1,7 @@
 import { X } from "lucide-react";
 import TournamentForm from "./TournamentForm";
 
-function CreateTournamentModal({
+function EditTournamentModal({
   isOpen,
   onClose,
   onSubmit,
@@ -13,36 +13,32 @@ function CreateTournamentModal({
 
       <div className="w-full max-w-3xl rounded-3xl bg-white shadow-2xl">
 
-        {/* Header */}
-
         <div className="flex items-center justify-between border-b border-stone-200 px-8 py-6">
 
           <div>
-            <h2 className="text-3xl font-bold text-slate-900">
-              Create Tournament
+            <h2 className="text-3xl font-bold">
+              Edit Tournament
             </h2>
 
             <p className="mt-2 text-slate-600">
-              Fill in the tournament details.
+              Update tournament information.
             </p>
           </div>
 
           <button
             onClick={onClose}
-            className="rounded-full p-2 hover:bg-stone-100 transition"
+            className="rounded-full p-2 hover:bg-stone-100"
           >
             <X size={24} />
           </button>
 
         </div>
 
-        {/* Body */}
-
         <div className="p-8">
 
           <TournamentForm
             onSubmit={onSubmit}
-            submitText="Create Tournament"
+            submitText="Save Changes"
           />
 
         </div>
@@ -53,4 +49,4 @@ function CreateTournamentModal({
   );
 }
 
-export default CreateTournamentModal;
+export default EditTournamentModal;

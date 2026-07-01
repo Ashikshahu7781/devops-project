@@ -7,6 +7,7 @@ function Select({
   value,
   onChange,
   required = false,
+  dark = false,
 }) {
   return (
     <div className="space-y-2">
@@ -15,6 +16,7 @@ function Select({
         <Label
           htmlFor={id}
           required={required}
+          dark={dark}
         >
           {label}
         </Label>
@@ -25,9 +27,12 @@ function Select({
         value={value}
         onChange={onChange}
         required={required}
-        className="w-full rounded-xl border border-stone-300 bg-white px-4 py-3 outline-none transition focus:border-[#556B2F] focus:ring-2 focus:ring-[#556B2F]/20"
+        className={`w-full rounded-xl px-4 py-3 outline-none transition border ${
+          dark
+            ? "bg-white/10 border-white/20 text-white focus:border-[#84A83A] focus:ring-2 focus:ring-[#84A83A]/30"
+            : "bg-white border-stone-300 text-slate-900 focus:border-[#556B2F] focus:ring-2 focus:ring-[#556B2F]/20"
+        }`}
       >
-
         <option value="">
           Select...
         </option>
@@ -40,7 +45,6 @@ function Select({
             {option.label}
           </option>
         ))}
-
       </select>
 
     </div>

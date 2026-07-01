@@ -48,14 +48,17 @@ function Login() {
         >
 
           <Input
+            dark
             id="email"
             label="Email"
             type="email"
             placeholder="Enter your email"
             required
+            
           />
 
           <PasswordInput
+            dark
             id="password"
             label="Password"
             placeholder="Enter your password"

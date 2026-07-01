@@ -18,7 +18,23 @@ function SearchInput({
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className="w-full rounded-xl border border-stone-300 bg-white py-3 pl-11 pr-4 outline-none transition focus:border-[#556B2F] focus:ring-2 focus:ring-[#556B2F]/20"
+        className="
+                                w-full
+                                rounded-xl
+                                border
+                                border-stone-300
+                                bg-white
+                                py-3
+                                pl-11
+                                pr-4
+                                text-slate-900
+                                placeholder:text-slate-400
+                                outline-none
+                                transition
+                                focus:border-[#556B2F]
+                                focus:ring-2
+                                focus:ring-[#556B2F]/20 "
+
       />
 
     </div>

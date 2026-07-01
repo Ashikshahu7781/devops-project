@@ -3,23 +3,24 @@ function Checkbox({
   label,
   checked,
   onChange,
+  dark = false,
 }) {
   return (
     <label
       htmlFor={id}
-      className="flex items-center gap-3 cursor-pointer"
+      className={`flex items-center gap-2 text-sm ${
+        dark ? "text-white" : "text-slate-700"
+      }`}
     >
       <input
         id={id}
         type="checkbox"
         checked={checked}
         onChange={onChange}
-        className="h-4 w-4 rounded border-slate-300 accent-[#556B2F]"
+        className="accent-[#556B2F]"
       />
 
-      <span className="text-sm text-white">
-        {label}
-      </span>
+      {label}
     </label>
   );
 }

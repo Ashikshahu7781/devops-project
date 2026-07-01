@@ -3,7 +3,7 @@ import Select from "../ui/Select";
 
 function TournamentFilters() {
   return (
-    <div className="grid lg:grid-cols-3 gap-6 mb-10">
+    <div className="grid lg:grid-cols-3 gap-6 items-end">
 
       <SearchInput
         placeholder="Search tournaments..."
