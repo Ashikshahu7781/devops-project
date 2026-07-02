@@ -23,6 +23,9 @@ function Tournaments() {
   const [selectedTournament, setSelectedTournament] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [tournamentToDelete, setTournamentToDelete] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sportFilter, setSportFilter] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("all");
   
   const handleCreateTournament = (newTournament) => {
     setTournaments((prevTournaments) => [
@@ -64,6 +67,29 @@ function Tournaments() {
   setShowDeleteModal(false);
   setTournamentToDelete(null);
 };
+  const filteredTournaments = tournaments.filter((tournament) => {
+    const matchesSearch =
+      tournament.name
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
+
+    const matchesSport =
+      sportFilter === "all" ||
+      tournament.sport.toLowerCase() === sportFilter;
+
+    const matchesStatus =
+      statusFilter === "all" ||
+      tournament.status === statusFilter;
+
+    return (
+      matchesSearch &&
+      matchesSport &&
+      matchesStatus
+    );
+  });
+
+
+
 
   return (
     <Container className="py-16">
@@ -81,10 +107,17 @@ function Tournaments() {
         }
       />
 
-      <TournamentFilters />
+      <TournamentFilters
+        searchTerm={searchTerm}
+        onSearchChange={(e) => setSearchTerm(e.target.value)}
+        sportFilter={sportFilter}
+        onSportChange={(e) => setSportFilter(e.target.value)}
+        statusFilter={statusFilter}
+        onStatusChange={(e) => setStatusFilter(e.target.value)}
+      />
 
       <TournamentList
-        tournaments={tournaments}
+        tournaments={filteredTournaments}
         onEdit={handleEditClick}
         onDelete={handleDeleteClick}
       />

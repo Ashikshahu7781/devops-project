@@ -1,22 +1,42 @@
-import DashboardHeader from "./DashboardHeader";
-import StatsCards from "./StatsCards";
-import DashboardContent from "./DashboardContent";
+import Container from "../../components/ui/Container";
+import DashboardStats from "../../components/dashboard/DashboardStats";
+import RecentTournaments from "../../components/dashboard/RecentTournaments";
+import UpcomingFixtures from "../../components/dashboard/UpcomingFixtures";
+import RecentActivity from "../../components/dashboard/RecentActivity";
 
 function Dashboard() {
   return (
-    <div className="min-h-screen bg-[#F8F7F4]">
+    <Container className="py-10">
 
-      <div className="max-w-7xl mx-auto px-6 py-10">
+      <div className="mb-10">
 
-        <DashboardHeader />
+        <h1 className="text-4xl font-bold text-slate-900">
+          Dashboard
+        </h1>
 
-        <StatsCards />
-
-        <DashboardContent />
+        <p className="mt-2 text-slate-600">
+          Welcome back! Here's an overview of your sports management system.
+        </p>
 
       </div>
 
-    </div>
+      <DashboardStats />
+
+      <div className="grid lg:grid-cols-2 gap-8 mt-10">
+
+        <RecentTournaments />
+
+        <UpcomingFixtures />
+
+      </div>
+
+      <div className="mt-10">
+
+        <RecentActivity />
+
+      </div>
+
+    </Container>
   );
 }
 
