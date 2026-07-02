@@ -1,8 +1,11 @@
 import Input from "../ui/Input";
 import Select from "../ui/Select";
-import Button from "../ui/Button";
 import TextArea from "../ui/TextArea";
+import Button from "../ui/Button";
+
 function TournamentForm({
+  formData,
+  onChange,
   onSubmit,
   submitText = "Create Tournament",
 }) {
@@ -15,20 +18,26 @@ function TournamentForm({
         id="name"
         label="Tournament Name"
         placeholder="Enter tournament name"
+        value={formData.name}
+        onChange={onChange}
         required
       />
+
       <TextArea
         id="description"
         label="Tournament Description"
-        placeholder="Enter tournament description..."
+        placeholder="Describe your tournament..."
         rows={4}
+        value={formData.description}
+        onChange={onChange}
       />
 
       <div className="grid md:grid-cols-2 gap-6">
-
         <Select
           id="sport"
           label="Sport"
+          value={formData.sport}
+          onChange={onChange}
           required
           options={[
             { value: "football", label: "Football" },
@@ -43,42 +52,48 @@ function TournamentForm({
           id="venue"
           label="Venue"
           placeholder="Enter venue"
+          value={formData.venue}
+          onChange={onChange}
           required
         />
-
       </div>
 
       <div className="grid md:grid-cols-2 gap-6">
-
         <Input
           id="startDate"
-          label="Start Date"
           type="date"
+          label="Start Date"
+          value={formData.startDate}
+          onChange={onChange}
           required
         />
 
         <Input
           id="endDate"
-          label="End Date"
           type="date"
+          label="End Date"
+          value={formData.endDate}
+          onChange={onChange}
           required
         />
-
       </div>
 
       <div className="grid md:grid-cols-2 gap-6">
-
         <Input
           id="maxTeams"
-          label="Maximum Teams"
           type="number"
+          label="Maximum Teams"
           placeholder="16"
+          value={formData.maxTeams}
+          onChange={onChange}
           required
         />
 
         <Select
           id="status"
           label="Status"
+          value={formData.status}
+          onChange={onChange}
           required
           options={[
             { value: "upcoming", label: "Upcoming" },
@@ -86,17 +101,13 @@ function TournamentForm({
             { value: "completed", label: "Completed" },
           ]}
         />
-
       </div>
 
       <div className="flex justify-end pt-4">
-
         <Button type="submit">
           {submitText}
         </Button>
-
       </div>
-
     </form>
   );
 }

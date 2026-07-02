@@ -2,22 +2,31 @@ import Button from "../ui/Button";
 
 function DeleteTournamentModal({
   isOpen,
+  tournament,
   onClose,
-  onDelete,
+  onConfirm,
 }) {
-  if (!isOpen) return null;
+  if (!isOpen || !tournament) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
 
       <div className="w-full max-w-md rounded-3xl bg-white p-8 shadow-2xl">
 
-        <h2 className="text-3xl font-bold text-slate-900">
+        <h2 className="text-2xl font-bold text-slate-900">
           Delete Tournament
         </h2>
 
         <p className="mt-4 text-slate-600">
-          Are you sure you want to delete this tournament?
+          Are you sure you want to delete
+          <span className="font-semibold text-slate-900">
+            {" "}
+            {tournament.name}
+          </span>
+          ?
+        </p>
+
+        <p className="mt-2 text-sm text-red-600">
           This action cannot be undone.
         </p>
 
@@ -31,8 +40,8 @@ function DeleteTournamentModal({
           </Button>
 
           <Button
-            onClick={onDelete}
-            className="bg-red-600 hover:bg-red-700"
+            variant="danger"
+            onClick={onConfirm}
           >
             Delete
           </Button>

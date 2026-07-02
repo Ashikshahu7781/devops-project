@@ -1,37 +1,33 @@
+import { Trophy } from "lucide-react";
+
 import TournamentCard from "./TournamentCard";
+import EmptyState from "../ui/EmptyState";
 
-const tournaments = [
-  {
-    id: 1,
-    name: "Kerala Premier League",
-    sport: "Football",
-    teams: 16,
-    date: "15 Aug 2026",
-    location: "Kochi",
-    status: "active",
-  },
-  {
-    id: 2,
-    name: "Inter College Cricket Cup",
-    sport: "Cricket",
-    teams: 32,
-    date: "21 Sep 2026",
-    location: "Trivandrum",
-    status: "upcoming",
-  },
-];
+function TournamentList({
+  tournaments,
+  onEdit,
+  onDelete,
+}) {
+  if (tournaments.length === 0) {
+    return (
+      <EmptyState
+        icon={Trophy}
+        title="No Tournaments"
+        description="Create your first tournament to get started."
+      />
+    );
+  }
 
-function TournamentList() {
   return (
     <div className="grid gap-6">
-
       {tournaments.map((tournament) => (
         <TournamentCard
           key={tournament.id}
           tournament={tournament}
+          onEdit={onEdit}
+          onDelete={onDelete}
         />
       ))}
-
     </div>
   );
 }
