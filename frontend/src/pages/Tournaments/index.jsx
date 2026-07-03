@@ -4,6 +4,8 @@ import { Plus } from "lucide-react";
 import {
   getTournaments,
   createTournament,
+  updateTournament,
+  deleteTournament,
 } from "../../api/tournament";
 
 import Container from "../../components/ui/Container";
@@ -23,7 +25,10 @@ function Tournaments() {
 
   const [selectedTournament, setSelectedTournament] = useState(null);
 
-  // Fetch tournaments from backend
+  // ===========================
+  // Fetch Tournaments
+  // ===========================
+
   const fetchTournaments = async () => {
     try {
       const response = await getTournaments();
@@ -37,7 +42,10 @@ function Tournaments() {
     fetchTournaments();
   }, []);
 
+  // ===========================
   // Create Tournament
+  // ===========================
+
   const handleCreateTournament = async (newTournament) => {
     try {
       await createTournament(newTournament);
@@ -51,22 +59,60 @@ function Tournaments() {
     }
   };
 
-  // Temporary local update until PUT API is created
-  const handleUpdateTournament = (updatedTournament) => {
-    setTournaments((prev) =>
-      prev.map((tournament) =>
-        tournament.id === updatedTournament.id
-          ? updatedTournament
-          : tournament
-      )
-    );
-
-    setShowEditModal(false);
-  };
+  // ===========================
+  // Edit Tournament
+  // ===========================
 
   const handleEditClick = (tournament) => {
     setSelectedTournament(tournament);
     setShowEditModal(true);
+  };
+
+  const handleUpdateTournament = async (updatedTournament) => {
+    try {
+      await updateTournament(
+        updatedTournament.id,
+        updatedTournament
+      );
+
+      await fetchTournaments();
+
+      setShowEditModal(false);
+
+      setSelectedTournament(null);
+
+    } catch (error) {
+      console.error(error);
+      alert("Failed to update tournament");
+    }
+  };
+
+  // ===========================
+  // Delete Tournament
+  // ===========================
+
+  const handleDeleteTournament = async (id) => {
+
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this tournament?"
+    );
+
+    if (!confirmed) return;
+
+    try {
+
+      await deleteTournament(id);
+
+      await fetchTournaments();
+
+    } catch (error) {
+
+      console.error(error);
+
+      alert("Failed to delete tournament");
+
+    }
+
   };
 
   return (
@@ -76,7 +122,9 @@ function Tournaments() {
         title="Tournaments"
         description="Manage all tournaments from one place."
         action={
-          <Button onClick={() => setShowCreateModal(true)}>
+          <Button
+            onClick={() => setShowCreateModal(true)}
+          >
             <Plus size={18} />
             Create Tournament
           </Button>
@@ -88,7 +136,7 @@ function Tournaments() {
       <TournamentList
         tournaments={tournaments}
         onEdit={handleEditClick}
-        onDelete={() => {}}
+        onDelete={handleDeleteTournament}
       />
 
       <CreateTournamentModal
@@ -100,7 +148,10 @@ function Tournaments() {
       <EditTournamentModal
         isOpen={showEditModal}
         tournament={selectedTournament}
-        onClose={() => setShowEditModal(false)}
+        onClose={() => {
+          setShowEditModal(false);
+          setSelectedTournament(null);
+        }}
         onUpdate={handleUpdateTournament}
       />
 

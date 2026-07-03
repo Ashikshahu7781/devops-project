@@ -29,12 +29,14 @@ function EditTournamentModal({
         name: tournament.name || "",
         description: tournament.description || "",
         sport: tournament.sport || "",
-        venue: tournament.location || "",
-        startDate: tournament.date || "",
-        endDate: tournament.endDate || "",
-        maxTeams: tournament.teams || "",
+        venue: tournament.venue || "",
+        startDate: tournament.start_date || "",
+        endDate: tournament.end_date || "",
+        maxTeams: tournament.max_teams || "",
         status: tournament.status || "upcoming",
       });
+    } else {
+      setFormData(initialFormData);
     }
   }, [tournament]);
 
@@ -49,18 +51,22 @@ function EditTournamentModal({
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const updatedTournament = {
-      ...formData,
-      teams: Number(formData.maxTeams),
-      location: formData.venue,
-      date: formData.startDate,
+      id: formData.id,
+      name: formData.name,
+      description: formData.description,
+      sport: formData.sport,
+      venue: formData.venue,
+      start_date: formData.startDate,
+      end_date: formData.endDate,
+      max_teams: Number(formData.maxTeams),
+      status: formData.status,
     };
 
-    onUpdate(updatedTournament);
-    onClose();
+    await onUpdate(updatedTournament);
   };
 
   return (

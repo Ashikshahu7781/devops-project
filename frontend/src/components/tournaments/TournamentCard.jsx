@@ -21,11 +21,15 @@ function TournamentCard({
           <p className="mt-2 text-[#556B2F] font-medium">
             {tournament.sport}
           </p>
+
+          {tournament.description && (
+            <p className="mt-2 text-gray-600">
+              {tournament.description}
+            </p>
+          )}
         </div>
 
-        <StatusBadge
-          status={tournament.status}
-        />
+        <StatusBadge status={tournament.status} />
 
       </div>
 
@@ -33,17 +37,17 @@ function TournamentCard({
 
         <div className="flex items-center gap-2">
           <Users size={18} />
-          {tournament.teams} Teams
+          {tournament.max_teams} Teams
         </div>
 
         <div className="flex items-center gap-2">
           <Calendar size={18} />
-          {tournament.date}
+          {tournament.start_date}
         </div>
 
         <div className="flex items-center gap-2">
           <MapPin size={18} />
-          {tournament.location}
+          {tournament.venue}
         </div>
 
       </div>
@@ -63,7 +67,7 @@ function TournamentCard({
 
         <Button
           variant="ghost"
-          onClick={() => onDelete(tournament)}
+          onClick={() => onDelete(tournament.id)}
         >
           Delete
         </Button>
