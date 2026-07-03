@@ -9,6 +9,8 @@ from app.extensions import (
 )
 from app.models.user import User
 from app.routes.auth_routes import auth_bp
+from app.models.tournament import Tournament
+from app.routes.tournament_routes import tournament_bp
 
 def create_app():
     app = Flask(__name__)
@@ -21,5 +23,6 @@ def create_app():
     cors.init_app(app)
     
     app.register_blueprint(auth_bp)
+    app.register_blueprint(tournament_bp)
     
     return app
