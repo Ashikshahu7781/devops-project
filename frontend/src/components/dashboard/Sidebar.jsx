@@ -5,8 +5,10 @@ import {
   Calendar,
   BarChart3,
   Settings,
+  LogOut,
 } from "lucide-react";
-import { NavLink } from "react-router-dom";
+
+import { NavLink, useNavigate } from "react-router-dom";
 
 const menuItems = [
   {
@@ -42,19 +44,44 @@ const menuItems = [
 ];
 
 function Sidebar() {
+  const navigate = useNavigate();
+
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  const handleLogout = () => {
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("user");
+
+    navigate("/login", { replace: true });
+  };
+
   return (
     <aside className="w-72 bg-[#1F2937] text-white flex flex-col">
 
+      {/* Logo */}
       <div className="p-8 border-b border-gray-700">
-
         <h1 className="text-3xl font-bold">
-          SportsTracker
+          Sports<span className="text-[#84A83A]">Tracker</span>
         </h1>
-
       </div>
 
-      <nav className="flex-1 p-6 space-y-2">
+      {/* Logged-in User */}
+      <div className="px-6 py-5 border-b border-gray-700">
+        <p className="text-sm text-gray-400">
+          Logged in as
+        </p>
 
+        <h2 className="text-lg font-semibold mt-1">
+          {user?.full_name || "User"}
+        </h2>
+
+        <p className="text-sm text-gray-400 truncate">
+          {user?.email}
+        </p>
+      </div>
+
+      {/* Navigation */}
+      <nav className="flex-1 p-6 space-y-2">
         {menuItems.map((item) => {
           const Icon = item.icon;
 
@@ -71,14 +98,22 @@ function Sidebar() {
               }
             >
               <Icon size={20} />
-
               {item.title}
-
             </NavLink>
           );
         })}
-
       </nav>
+
+      {/* Logout */}
+      <div className="p-6 border-t border-gray-700">
+        <button
+          onClick={handleLogout}
+          className="w-full flex items-center gap-4 px-4 py-3 rounded-xl text-red-400 hover:bg-red-500/10 transition"
+        >
+          <LogOut size={20} />
+          Logout
+        </button>
+      </div>
 
     </aside>
   );
