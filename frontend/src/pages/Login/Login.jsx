@@ -1,4 +1,7 @@
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
+import { loginUser } from "../../api/auth";
 
 import AuthLayout from "../../components/layout/AuthLayout";
 import Input from "../../components/ui/Input";
@@ -9,11 +12,57 @@ import Button from "../../components/ui/Button";
 function Login() {
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [id]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // TODO: Replace this with API authentication later
-    navigate("/dashboard");
+    try {
+      setLoading(true);
+
+      const response = await loginUser({
+        email: formData.email,
+        password: formData.password,
+      });
+
+      localStorage.setItem(
+        "access_token",
+        response.data.access_token
+      );
+
+      localStorage.setItem(
+        "user",
+        JSON.stringify(response.data.user)
+      );
+
+      alert(response.message);
+
+      navigate("/dashboard");
+
+    } catch (error) {
+
+      alert(
+        error.response?.data?.message ||
+        "Login failed"
+      );
+
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -32,29 +81,28 @@ function Login() {
           text-white
         "
       >
-
         <h1 className="text-4xl font-extrabold text-center">
-              Sports<span className="text-[#84A83A]">Tracker</span>
+          Sports<span className="text-[#84A83A]">Tracker</span>
         </h1>
 
-       <p className="mt-5 text-center text-white/90">
-            Organize tournaments, manage teams,
-            generate fixtures and crown champions.
-      </p>
+        <p className="mt-5 text-center text-white/90">
+          Organize tournaments, manage teams,
+          generate fixtures and crown champions.
+        </p>
 
         <form
           onSubmit={handleSubmit}
           className="mt-8 space-y-6"
         >
-
           <Input
             dark
             id="email"
             label="Email"
             type="email"
             placeholder="Enter your email"
+            value={formData.email}
+            onChange={handleChange}
             required
-            
           />
 
           <PasswordInput
@@ -62,6 +110,8 @@ function Login() {
             id="password"
             label="Password"
             placeholder="Enter your password"
+            value={formData.password}
+            onChange={handleChange}
             required
           />
 
@@ -84,8 +134,9 @@ function Login() {
           <Button
             type="submit"
             className="w-full"
+            disabled={loading}
           >
-            Login
+            {loading ? "Logging in..." : "Login"}
           </Button>
 
         </form>

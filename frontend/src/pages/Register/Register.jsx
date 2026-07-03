@@ -1,4 +1,7 @@
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
+import { registerUser } from "../../api/auth";
 
 import AuthLayout from "../../components/layout/AuthLayout";
 import Input from "../../components/ui/Input";
@@ -8,11 +11,55 @@ import Button from "../../components/ui/Button";
 function Register() {
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const [formData, setFormData] = useState({
+    full_name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [id]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Replace with API call later
-    navigate("/dashboard");
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const response = await registerUser({
+        full_name: formData.full_name,
+        email: formData.email,
+        password: formData.password,
+      });
+
+      alert(response.message);
+
+      navigate("/login");
+
+    } catch (error) {
+
+      alert(
+        error.response?.data?.message ||
+        "Registration failed"
+      );
+
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -46,9 +93,11 @@ function Register() {
         >
           <Input
             dark
-            id="name"
+            id="full_name"
             label="Full Name"
             placeholder="Enter your full name"
+            value={formData.full_name}
+            onChange={handleChange}
             required
           />
 
@@ -58,6 +107,8 @@ function Register() {
             label="Email"
             type="email"
             placeholder="Enter your email"
+            value={formData.email}
+            onChange={handleChange}
             required
           />
 
@@ -66,6 +117,8 @@ function Register() {
             id="password"
             label="Password"
             placeholder="Create a password"
+            value={formData.password}
+            onChange={handleChange}
             required
           />
 
@@ -74,14 +127,17 @@ function Register() {
             id="confirmPassword"
             label="Confirm Password"
             placeholder="Confirm your password"
+            value={formData.confirmPassword}
+            onChange={handleChange}
             required
           />
 
           <Button
             type="submit"
             className="w-full bg-[#6D8D2E] hover:bg-[#5C7728]"
+            disabled={loading}
           >
-            Create Account
+            {loading ? "Creating..." : "Create Account"}
           </Button>
         </form>
 

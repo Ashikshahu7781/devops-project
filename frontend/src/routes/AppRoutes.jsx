@@ -3,6 +3,8 @@ import { Routes, Route } from "react-router-dom";
 import Layout from "../components/layout/Layout";
 import DashboardLayout from "../components/dashboard/DashboardLayout";
 
+import ProtectedRoute from "../components/auth/ProtectedRoute";
+
 import Home from "../pages/Home";
 import About from "../pages/About";
 
@@ -17,16 +19,13 @@ import Fixtures from "../pages/Fixtures";
 import Standings from "../pages/Standings";
 import TournamentDetails from "../pages/TournamentDetails";
 
-// Uncomment this after creating the page
 // import Settings from "../pages/Settings";
 
 function AppRoutes() {
   return (
     <Routes>
 
-      {/* ==========================
-          Public Website Layout
-      ========================== */}
+      {/* Public Website */}
 
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
@@ -34,18 +33,21 @@ function AppRoutes() {
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
 
-        {/* Public Tournament Details */}
         <Route
           path="tournaments/:id"
           element={<TournamentDetails />}
         />
       </Route>
 
-      {/* ==========================
-          Dashboard Layout
-      ========================== */}
+      {/* Protected Dashboard */}
 
-      <Route element={<DashboardLayout />}>
+      <Route
+        element={
+          <ProtectedRoute>
+            <DashboardLayout />
+          </ProtectedRoute>
+        }
+      >
 
         <Route
           path="/dashboard"
@@ -71,13 +73,6 @@ function AppRoutes() {
           path="/standings"
           element={<Standings />}
         />
-
-        {/*
-        <Route
-          path="/settings"
-          element={<Settings />}
-        />
-        */}
 
       </Route>
 
