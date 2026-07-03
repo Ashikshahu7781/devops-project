@@ -55,7 +55,6 @@ function EditTournamentModal({
     e.preventDefault();
 
     const updatedTournament = {
-      id: formData.id,
       name: formData.name,
       description: formData.description,
       sport: formData.sport,
