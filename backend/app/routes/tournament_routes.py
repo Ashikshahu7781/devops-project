@@ -45,3 +45,48 @@ def create_tournament():
         "message": "Tournament created successfully",
         "data": tournament_schema.dump(tournament),
     }), 201
+    
+@tournament_bp.route("/<int:tournament_id>", methods=["PUT"])
+def update_tournament(tournament_id):
+
+    try:
+        data = tournament_schema.load(request.get_json())
+
+    except ValidationError as err:
+        return jsonify({
+            "success": False,
+            "errors": err.messages,
+        }), 400
+
+    tournament = TournamentService.update(
+        tournament_id,
+        data,
+    )
+
+    if not tournament:
+        return jsonify({
+            "success": False,
+            "message": "Tournament not found",
+        }), 404
+
+    return jsonify({
+        "success": True,
+        "message": "Tournament updated successfully",
+        "data": tournament_schema.dump(tournament),
+    }), 200
+    
+@tournament_bp.route("/<int:tournament_id>", methods=["DELETE"])
+def delete_tournament(tournament_id):
+
+    deleted = TournamentService.delete(tournament_id)
+
+    if not deleted:
+        return jsonify({
+            "success": False,
+            "message": "Tournament not found",
+    }), 404
+
+    return jsonify({
+        "success": True,
+        "message": "Tournament deleted successfully",
+    }), 200

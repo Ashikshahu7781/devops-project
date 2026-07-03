@@ -31,3 +31,33 @@ class TournamentService:
         db.session.commit()
 
         return tournament
+    @staticmethod
+    def update(tournament_id, data):
+        tournament = Tournament.query.get(tournament_id)
+
+        if not tournament:
+            return None
+
+        tournament.name = data["name"]
+        tournament.description = data.get("description")
+        tournament.sport = data["sport"]
+        tournament.venue = data["venue"]
+        tournament.start_date = data["start_date"]
+        tournament.end_date = data["end_date"]
+        tournament.max_teams = data["max_teams"]
+        tournament.status = data["status"]
+
+        db.session.commit()
+
+        return tournament
+    @staticmethod
+    def delete(tournament_id):
+        tournament = Tournament.query.get(tournament_id)
+
+        if not tournament:
+            return False
+
+        db.session.delete(tournament)
+        db.session.commit()
+
+        return True  
