@@ -19,6 +19,7 @@ function CreateTournamentModal({
   onCreate,
 }) {
   const [formData, setFormData] = useState(initialFormData);
+  const [loading, setLoading] = useState(false);
 
   if (!isOpen) return null;
 
@@ -31,22 +32,33 @@ function CreateTournamentModal({
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const newTournament = {
-      id: Date.now(),
-      ...formData,
-      teams: Number(formData.maxTeams),
-      date: formData.startDate,
-      location: formData.venue,
-    };
+    try {
+      setLoading(true);
 
-    onCreate(newTournament);
+      const newTournament = {
+        name: formData.name,
+        description: formData.description,
+        sport: formData.sport,
+        venue: formData.venue,
+        start_date: formData.startDate,
+        end_date: formData.endDate,
+        max_teams: Number(formData.maxTeams),
+        status: formData.status,
+      };
 
-    setFormData(initialFormData);
+      await onCreate(newTournament);
 
-    onClose();
+      setFormData(initialFormData);
+
+    } catch (error) {
+      console.error(error);
+      alert("Failed to create tournament");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -55,7 +67,6 @@ function CreateTournamentModal({
       <div className="w-full max-w-3xl rounded-3xl bg-white shadow-2xl my-8 max-h-[90vh] overflow-hidden">
 
         {/* Header */}
-
         <div className="sticky top-0 z-10 flex items-center justify-between border-b border-stone-200 bg-white px-8 py-6">
 
           <div>
@@ -77,15 +88,18 @@ function CreateTournamentModal({
 
         </div>
 
-        {/* Body */}
-
+        {/* Form */}
         <div className="p-8 overflow-y-auto max-h-[calc(90vh-120px)]">
 
           <TournamentForm
             formData={formData}
             onChange={handleChange}
             onSubmit={handleSubmit}
-            submitText="Create Tournament"
+            submitText={
+              loading
+                ? "Creating..."
+                : "Create Tournament"
+            }
           />
 
         </div>
