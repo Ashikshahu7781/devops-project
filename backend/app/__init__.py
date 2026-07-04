@@ -11,6 +11,8 @@ from app.models.user import User
 from app.routes.auth_routes import auth_bp
 from app.models.tournament import Tournament
 from app.routes.tournament_routes import tournament_bp
+from app.models.team import Team
+from app.routes.team_routes import team_bp
 
 def create_app():
     app = Flask(__name__)
@@ -24,5 +26,6 @@ def create_app():
     
     app.register_blueprint(auth_bp)
     app.register_blueprint(tournament_bp)
+    app.register_blueprint(team_bp)
     
     return app

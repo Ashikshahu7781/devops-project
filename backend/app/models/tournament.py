@@ -38,3 +38,10 @@ class Tournament(db.Model):
         default=datetime.utcnow,
         onupdate=datetime.utcnow,
     )
+    
+    teams = db.relationship(
+    "Team",
+    backref="tournament",
+    lazy=True,
+    cascade="all, delete-orphan",
+)
