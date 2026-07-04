@@ -1,47 +1,165 @@
-import { Users, Plus } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Plus } from "lucide-react";
+
+import {
+  getTeams,
+  createTeam,
+  updateTeam,
+  deleteTeam,
+} from "../../api/team";
+
+import Container from "../../components/ui/Container";
+import PageHeader from "../../components/ui/PageHeader";
 import Button from "../../components/ui/Button";
 
+import TeamFilters from "../../components/teams/TeamFilters";
+import TeamList from "../../components/teams/TeamList";
+
+import CreateTeamModal from "../../components/teams/CreateTeamModal";
+import EditTeamModal from "../../components/teams/EditTeamModal";
+
 function Teams() {
+
+  const [teams, setTeams] = useState([]);
+
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+
+  const [selectedTeam, setSelectedTeam] = useState(null);
+
+  const fetchTeams = async () => {
+    try {
+
+      const response = await getTeams();
+
+      setTeams(response.data);
+
+    } catch (error) {
+
+      console.error(error);
+
+    }
+  };
+
+  useEffect(() => {
+    fetchTeams();
+  }, []);
+
+  const handleCreate = async (team) => {
+
+    await createTeam(team);
+
+    await fetchTeams();
+
+    setShowCreateModal(false);
+
+  };
+
+  const handleEditClick = (team) => {
+
+    setSelectedTeam(team);
+
+    setShowEditModal(true);
+
+  };
+
+  const handleUpdate = async (team) => {
+
+    await updateTeam(
+      selectedTeam.id,
+      team
+    );
+
+    await fetchTeams();
+
+    setShowEditModal(false);
+
+    setSelectedTeam(null);
+
+  };
+
+  const handleDelete = async (id) => {
+
+    const confirmed = window.confirm(
+      "Delete this team?"
+    );
+
+    if (!confirmed) return;
+
+    await deleteTeam(id);
+
+    await fetchTeams();
+
+  };
+
+  const filteredTeams = teams.filter((team) => {
+
+    return (
+
+      team.name
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+
+      team.coach
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+
+      team.captain
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase())
+
+    );
+
+  });
+
   return (
-    <div className="max-w-7xl mx-auto px-6 py-16">
+    <Container className="py-16">
 
-      <div className="flex items-center justify-between">
+      <PageHeader
+        title="Teams"
+        description="Manage all teams."
+        action={
+          <Button
+            onClick={() => setShowCreateModal(true)}
+          >
+            <Plus size={18} />
+            Create Team
+          </Button>
+        }
+      />
 
-        <div>
-          <h1 className="text-5xl font-bold">
-            Teams
-          </h1>
+      <TeamFilters
+        searchTerm={searchTerm}
+        onSearchChange={(e) =>
+          setSearchTerm(e.target.value)
+        }
+      />
 
-          <p className="mt-3 text-slate-600">
-            Register and manage participating teams.
-          </p>
-        </div>
+      <TeamList
+        teams={filteredTeams}
+        onEdit={handleEditClick}
+        onDelete={handleDelete}
+      />
 
-        <Button>
-          <Plus size={18} />
-          Add Team
-        </Button>
+      <CreateTeamModal
+        isOpen={showCreateModal}
+        onClose={() => setShowCreateModal(false)}
+        onCreate={handleCreate}
+      />
 
-      </div>
+      <EditTeamModal
+        isOpen={showEditModal}
+        team={selectedTeam}
+        onClose={() => {
+          setShowEditModal(false);
+          setSelectedTeam(null);
+        }}
+        onUpdate={handleUpdate}
+      />
 
-      <div className="mt-16 bg-white rounded-3xl shadow p-16 text-center">
-
-        <Users
-          size={70}
-          className="mx-auto text-[#556B2F]"
-        />
-
-        <h2 className="mt-6 text-3xl font-bold">
-          No Teams Registered
-        </h2>
-
-        <p className="mt-4 text-slate-600">
-          Start by registering your first team.
-        </p>
-
-      </div>
-
-    </div>
+    </Container>
   );
 }
 
