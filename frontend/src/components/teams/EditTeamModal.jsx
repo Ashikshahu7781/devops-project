@@ -20,6 +20,7 @@ function EditTeamModal({
   team,
   onClose,
   onUpdate,
+  hideTournament = false,
 }) {
   const [formData, setFormData] = useState(initialFormData);
   const [tournaments, setTournaments] = useState([]);
@@ -116,7 +117,7 @@ function EditTeamModal({
 
         {/* Form */}
 
-        <div className="p-8 overflow-y-auto">
+        <div className="p-8 overflow-y-auto max-h-[calc(90vh-120px)]">
 
           <TeamForm
             formData={formData}
@@ -124,6 +125,7 @@ function EditTeamModal({
             onChange={handleChange}
             onSubmit={handleSubmit}
             submitText="Save Changes"
+            hideTournament={hideTournament}
           />
 
         </div>

@@ -8,26 +8,33 @@ function TeamForm({
   onChange,
   onSubmit,
   submitText = "Create Team",
+  hideTournament = false,
 }) {
   return (
     <form
       onSubmit={onSubmit}
       className="space-y-6"
     >
-      <Select
-        id="tournament_id"
-        label="Tournament"
-        value={formData.tournament_id}
-        onChange={onChange}
-        required
-        options={[
-          { value: "", label: "Select Tournament" },
-          ...tournaments.map((tournament) => ({
-            value: tournament.id,
-            label: tournament.name,
-          })),
-        ]}
-      />
+
+      {!hideTournament && (
+        <Select
+          id="tournament_id"
+          label="Tournament"
+          value={formData.tournament_id}
+          onChange={onChange}
+          required
+          options={[
+            {
+              value: "",
+              label: "Select Tournament",
+            },
+            ...tournaments.map((tournament) => ({
+              value: tournament.id,
+              label: tournament.name,
+            })),
+          ]}
+        />
+      )}
 
       <Input
         id="name"
@@ -39,10 +46,11 @@ function TeamForm({
       />
 
       <div className="grid md:grid-cols-2 gap-6">
+
         <Input
           id="coach"
           label="Coach"
-          placeholder="Coach name"
+          placeholder="Coach Name"
           value={formData.coach}
           onChange={onChange}
           required
@@ -51,19 +59,21 @@ function TeamForm({
         <Input
           id="captain"
           label="Captain"
-          placeholder="Captain name"
+          placeholder="Captain Name"
           value={formData.captain}
           onChange={onChange}
           required
         />
+
       </div>
 
       <div className="grid md:grid-cols-2 gap-6">
+
         <Input
           id="contact_email"
           type="email"
           label="Contact Email"
-          placeholder="team@email.com"
+          placeholder="Enter email"
           value={formData.contact_email}
           onChange={onChange}
           required
@@ -77,12 +87,13 @@ function TeamForm({
           onChange={onChange}
           required
         />
+
       </div>
 
       <Input
         id="logo"
-        label="Logo URL (Optional)"
-        placeholder="https://example.com/logo.png"
+        label="Logo URL"
+        placeholder="https://..."
         value={formData.logo}
         onChange={onChange}
       />
@@ -92,6 +103,7 @@ function TeamForm({
           {submitText}
         </Button>
       </div>
+
     </form>
   );
 }

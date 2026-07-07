@@ -1,4 +1,5 @@
 import { Calendar, Users, MapPin } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 import Button from "../ui/Button";
 import StatusBadge from "../ui/StatusBadge";
@@ -8,6 +9,9 @@ function TournamentCard({
   onEdit,
   onDelete,
 }) {
+
+  const navigate = useNavigate();
+
   return (
     <div className="bg-white rounded-3xl border border-stone-200 p-6 shadow-sm hover:shadow-xl transition-all duration-300">
 
@@ -29,7 +33,9 @@ function TournamentCard({
           )}
         </div>
 
-        <StatusBadge status={tournament.status} />
+        <StatusBadge
+          status={tournament.status}
+        />
 
       </div>
 
@@ -54,7 +60,11 @@ function TournamentCard({
 
       <div className="flex gap-3 mt-8">
 
-        <Button>
+        <Button
+          onClick={() =>
+            navigate(`/tournaments/${tournament.id}`)
+          }
+        >
           View
         </Button>
 

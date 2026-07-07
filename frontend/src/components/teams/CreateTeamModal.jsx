@@ -18,6 +18,7 @@ function CreateTeamModal({
   isOpen,
   onClose,
   onCreate,
+  hideTournament = false,
 }) {
   const [formData, setFormData] = useState(initialFormData);
   const [tournaments, setTournaments] = useState([]);
@@ -89,15 +90,16 @@ function CreateTeamModal({
 
         {/* Form */}
 
-        <div className="p-8 overflow-y-auto">
+        <div className="p-8 overflow-y-auto max-h-[calc(90vh-120px)]">
 
-          <TeamForm
+        <TeamForm
             formData={formData}
             tournaments={tournaments}
             onChange={handleChange}
             onSubmit={handleSubmit}
             submitText="Create Team"
-          />
+            hideTournament={hideTournament}
+        />
 
         </div>
 
