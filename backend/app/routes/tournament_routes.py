@@ -90,3 +90,21 @@ def delete_tournament(tournament_id):
         "success": True,
         "message": "Tournament deleted successfully",
     }), 200
+    
+@tournament_bp.route("/<int:tournament_id>", methods=["GET"])
+def get_tournament(tournament_id):
+
+    tournament = TournamentService.get_by_id(
+    tournament_id
+    )
+
+    if not tournament:
+        return jsonify({
+            "success": False,
+            "message": "Tournament not found",
+        }), 404
+
+    return jsonify({
+        "success": True,
+        "data": tournament_schema.dump(tournament),
+    }), 200

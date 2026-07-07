@@ -61,3 +61,7 @@ class TournamentService:
         db.session.commit()
 
         return True  
+    @staticmethod
+    def get_by_id(tournament_id):
+
+        return Tournament.query.get(tournament_id)
