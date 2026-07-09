@@ -14,6 +14,7 @@ from app.routes.tournament_routes import tournament_bp
 from app.models.team import Team
 from app.routes.team_routes import team_bp
 from app.routes.fixture_routes import fixture_bp
+from app.routes.standing_routes import standing_bp
 
 def create_app():
     app = Flask(__name__)
@@ -29,5 +30,6 @@ def create_app():
     app.register_blueprint(tournament_bp)
     app.register_blueprint(team_bp)
     app.register_blueprint(fixture_bp)
+    app.register_blueprint(standing_bp)
     
     return app
