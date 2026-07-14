@@ -38,10 +38,19 @@ class Tournament(db.Model):
         default=datetime.utcnow,
         onupdate=datetime.utcnow,
     )
+    created_by = db.Column(
+        db.Integer,
+        db.ForeignKey("users.id"),
+        nullable=False,
+)
     
     teams = db.relationship(
     "Team",
     backref="tournament",
     lazy=True,
     cascade="all, delete-orphan",
+)
+    owner = db.relationship(
+    "User",
+    backref="tournaments"
 )

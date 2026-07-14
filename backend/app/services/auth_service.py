@@ -1,7 +1,8 @@
 from app.extensions import db
 from app.models.user import User
 from flask_jwt_extended import create_access_token
-
+from app.schemas.user_schema import UserSchema
+user_schema = UserSchema()
 class AuthService:
 
     @staticmethod
@@ -48,10 +49,5 @@ class AuthService:
 
         return {
             "access_token": access_token,
-            "user": {
-                "id": user.id,
-                "full_name": user.full_name,
-                "email": user.email,
-                "role": user.role,
-            },
+           "user": user_schema.dump(user),
         }, None

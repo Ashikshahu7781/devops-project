@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 from marshmallow import ValidationError
+from app.schemas.user_schema import UserSchema
 
 from app.schemas.auth_schema import RegisterSchema
 from app.services.auth_service import AuthService
@@ -13,6 +14,7 @@ auth_bp = Blueprint(
 
 register_schema = RegisterSchema()
 login_schema = LoginSchema()
+user_schema = UserSchema()
 
 @auth_bp.route("/register", methods=["POST"])
 def register():
@@ -37,12 +39,7 @@ def register():
     return jsonify({
         "success": True,
         "message": "User registered successfully",
-        "data": {
-            "id": user.id,
-            "full_name": user.full_name,
-            "email": user.email,
-            "role": user.role,
-        },
+       "data": user_schema.dump(user),
     }), 201
     
 @auth_bp.route("/login", methods=["POST"])

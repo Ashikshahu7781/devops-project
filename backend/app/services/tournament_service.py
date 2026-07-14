@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from app.extensions import db
 from app.models.tournament import Tournament
 
@@ -7,15 +5,17 @@ from app.models.tournament import Tournament
 class TournamentService:
 
     @staticmethod
-    def get_all():
-        tournaments = Tournament.query.order_by(
-            Tournament.created_at.desc()
-        ).all()
-
-        return tournaments
+    def get_all(user_id):
+        return (
+            Tournament.query
+            .filter_by(created_by=user_id)
+            .order_by(Tournament.created_at.desc())
+            .all()
+        )
 
     @staticmethod
-    def create(data):
+    def create(data, user_id):
+
         tournament = Tournament(
             name=data["name"],
             description=data.get("description"),
@@ -25,15 +25,29 @@ class TournamentService:
             end_date=data["end_date"],
             max_teams=data["max_teams"],
             status=data.get("status", "upcoming"),
+            created_by=user_id,
         )
 
         db.session.add(tournament)
         db.session.commit()
 
         return tournament
+
     @staticmethod
-    def update(tournament_id, data):
-        tournament = Tournament.query.get(tournament_id)
+    def get_by_id(tournament_id, user_id):
+
+        return Tournament.query.filter_by(
+            id=tournament_id,
+            created_by=user_id,
+        ).first()
+
+    @staticmethod
+    def update(tournament_id, data, user_id):
+
+        tournament = Tournament.query.filter_by(
+            id=tournament_id,
+            created_by=user_id,
+        ).first()
 
         if not tournament:
             return None
@@ -50,9 +64,14 @@ class TournamentService:
         db.session.commit()
 
         return tournament
+
     @staticmethod
-    def delete(tournament_id):
-        tournament = Tournament.query.get(tournament_id)
+    def delete(tournament_id, user_id):
+
+        tournament = Tournament.query.filter_by(
+            id=tournament_id,
+            created_by=user_id,
+        ).first()
 
         if not tournament:
             return False
@@ -60,8 +79,4 @@ class TournamentService:
         db.session.delete(tournament)
         db.session.commit()
 
-        return True  
-    @staticmethod
-    def get_by_id(tournament_id):
-
-        return Tournament.query.get(tournament_id)
+        return True
