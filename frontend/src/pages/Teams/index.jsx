@@ -8,6 +8,8 @@ import {
   deleteTeam,
 } from "../../api/team";
 
+import { getTournaments } from "../../api/tournament";
+
 import Container from "../../components/ui/Container";
 import PageHeader from "../../components/ui/PageHeader";
 import Button from "../../components/ui/Button";
@@ -21,6 +23,8 @@ import EditTeamModal from "../../components/teams/EditTeamModal";
 function Teams() {
 
   const [teams, setTeams] = useState([]);
+  const [tournaments, setTournaments] = useState([]);
+  const [selectedTournament, setSelectedTournament] = useState("");
 
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -29,10 +33,45 @@ function Teams() {
 
   const [selectedTeam, setSelectedTeam] = useState(null);
 
-  const fetchTeams = async () => {
+  useEffect(() => {
+    loadTournaments();
+  }, []);
+
+  useEffect(() => {
+    if (selectedTournament) {
+      fetchTeams(selectedTournament);
+    } else {
+      setTeams([]);
+    }
+  }, [selectedTournament]);
+
+  const loadTournaments = async () => {
+
     try {
 
-      const response = await getTeams();
+      const response = await getTournaments();
+
+      const list = response.data;
+
+      setTournaments(list);
+
+      if (list.length > 0) {
+        setSelectedTournament(list[0].id);
+      }
+
+    } catch (error) {
+
+      console.error(error);
+
+    }
+
+  };
+
+  const fetchTeams = async (tournamentId) => {
+
+    try {
+
+      const response = await getTeams(tournamentId);
 
       setTeams(response.data);
 
@@ -41,17 +80,17 @@ function Teams() {
       console.error(error);
 
     }
-  };
 
-  useEffect(() => {
-    fetchTeams();
-  }, []);
+  };
 
   const handleCreate = async (team) => {
 
-    await createTeam(team);
+    await createTeam({
+      ...team,
+      tournament_id: selectedTournament,
+    });
 
-    await fetchTeams();
+    await fetchTeams(selectedTournament);
 
     setShowCreateModal(false);
 
@@ -69,10 +108,13 @@ function Teams() {
 
     await updateTeam(
       selectedTeam.id,
-      team
+      {
+        ...team,
+        tournament_id: selectedTournament,
+      }
     );
 
-    await fetchTeams();
+    await fetchTeams(selectedTournament);
 
     setShowEditModal(false);
 
@@ -90,45 +132,72 @@ function Teams() {
 
     await deleteTeam(id);
 
-    await fetchTeams();
+    await fetchTeams(selectedTournament);
 
   };
 
-  const filteredTeams = teams.filter((team) => {
+  const filteredTeams = teams.filter((team) =>
 
-    return (
+    team.name
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase()) ||
 
-      team.name
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase()) ||
+    team.coach
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase()) ||
 
-      team.coach
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase()) ||
+    team.captain
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase())
 
-      team.captain
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase())
-
-    );
-
-  });
+  );
 
   return (
+
     <Container className="py-16">
 
       <PageHeader
         title="Teams"
-        description="Manage all teams."
+        description="Manage tournament teams."
         action={
           <Button
             onClick={() => setShowCreateModal(true)}
+            disabled={!selectedTournament}
           >
             <Plus size={18} />
             Create Team
           </Button>
         }
       />
+
+      <div className="mb-6">
+
+        <label className="block mb-2 font-medium">
+          Select Tournament
+        </label>
+
+        <select
+          className="w-full rounded-xl border border-gray-300 p-3"
+          value={selectedTournament}
+          onChange={(e) =>
+            setSelectedTournament(Number(e.target.value))
+          }
+        >
+
+          {tournaments.map((tournament) => (
+
+            <option
+              key={tournament.id}
+              value={tournament.id}
+            >
+              {tournament.name}
+            </option>
+
+          ))}
+
+        </select>
+
+      </div>
 
       <TeamFilters
         searchTerm={searchTerm}
@@ -160,6 +229,7 @@ function Teams() {
       />
 
     </Container>
+
   );
 }
 

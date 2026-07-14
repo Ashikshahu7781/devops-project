@@ -4,7 +4,7 @@ import {
   Users,
   Calendar,
   BarChart3,
-  Settings,
+  User,
   LogOut,
 } from "lucide-react";
 
@@ -37,9 +37,9 @@ const menuItems = [
     path: "/standings",
   },
   {
-    title: "Settings",
-    icon: Settings,
-    path: "/settings",
+  title: "My Account",
+  icon: User,
+  path: "/account",
   },
 ];
 

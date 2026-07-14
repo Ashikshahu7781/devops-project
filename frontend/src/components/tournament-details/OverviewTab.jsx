@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   Calendar,
   MapPin,
@@ -5,7 +6,37 @@ import {
   Users,
 } from "lucide-react";
 
+import { getTournamentStatistics } from "../../api/statistics";
+
 function OverviewTab({ tournament }) {
+
+  const [statistics, setStatistics] = useState(null);
+
+  useEffect(() => {
+
+    if (tournament) {
+      fetchStatistics();
+    }
+
+  }, [tournament]);
+
+  const fetchStatistics = async () => {
+
+    try {
+
+      const response = await getTournamentStatistics(
+        tournament.id
+      );
+
+      setStatistics(response.data.data);
+
+    } catch (error) {
+
+      console.error(error);
+
+    }
+
+  };
 
   if (!tournament) return null;
 
@@ -24,75 +55,33 @@ function OverviewTab({ tournament }) {
         <div className="space-y-5">
 
           <div className="flex justify-between">
-
-            <span className="text-gray-500">
-              Sport
-            </span>
-
-            <span className="font-semibold">
-              {tournament.sport}
-            </span>
-
+            <span className="text-gray-500">Sport</span>
+            <span className="font-semibold">{tournament.sport}</span>
           </div>
 
           <div className="flex justify-between">
-
-            <span className="text-gray-500">
-              Venue
-            </span>
-
-            <span className="font-semibold">
-              {tournament.venue}
-            </span>
-
+            <span className="text-gray-500">Venue</span>
+            <span className="font-semibold">{tournament.venue}</span>
           </div>
 
           <div className="flex justify-between">
-
-            <span className="text-gray-500">
-              Status
-            </span>
-
-            <span className="font-semibold">
-              {tournament.status}
-            </span>
-
+            <span className="text-gray-500">Status</span>
+            <span className="font-semibold">{tournament.status}</span>
           </div>
 
           <div className="flex justify-between">
-
-            <span className="text-gray-500">
-              Start Date
-            </span>
-
-            <span className="font-semibold">
-              {tournament.start_date}
-            </span>
-
+            <span className="text-gray-500">Start Date</span>
+            <span className="font-semibold">{tournament.start_date}</span>
           </div>
 
           <div className="flex justify-between">
-
-            <span className="text-gray-500">
-              End Date
-            </span>
-
-            <span className="font-semibold">
-              {tournament.end_date}
-            </span>
-
+            <span className="text-gray-500">End Date</span>
+            <span className="font-semibold">{tournament.end_date}</span>
           </div>
 
           <div className="flex justify-between">
-
-            <span className="text-gray-500">
-              Maximum Teams
-            </span>
-
-            <span className="font-semibold">
-              {tournament.max_teams}
-            </span>
-
+            <span className="text-gray-500">Maximum Teams</span>
+            <span className="font-semibold">{tournament.max_teams}</span>
           </div>
 
         </div>
@@ -104,7 +93,7 @@ function OverviewTab({ tournament }) {
       <div className="bg-white rounded-3xl border border-stone-200 p-8">
 
         <h2 className="text-2xl font-bold mb-6">
-          Statistics
+          Tournament Statistics
         </h2>
 
         <div className="grid grid-cols-2 gap-6">
@@ -117,7 +106,7 @@ function OverviewTab({ tournament }) {
             />
 
             <h3 className="mt-4 text-3xl font-bold">
-              0
+              {statistics?.teams ?? 0}
             </h3>
 
             <p className="text-gray-500">
@@ -134,11 +123,13 @@ function OverviewTab({ tournament }) {
             />
 
             <h3 className="mt-4 text-3xl font-bold">
-              0
+              {statistics?.completed_matches ?? 0} /
+              {" "}
+              {statistics?.total_matches ?? 0}
             </h3>
 
             <p className="text-gray-500">
-              Fixtures
+              Matches Played
             </p>
 
           </div>
@@ -151,11 +142,11 @@ function OverviewTab({ tournament }) {
             />
 
             <h3 className="mt-4 text-3xl font-bold">
-              0
+              {statistics?.total_goals ?? 0}
             </h3>
 
             <p className="text-gray-500">
-              Matches
+              Total Goals
             </p>
 
           </div>
@@ -168,11 +159,15 @@ function OverviewTab({ tournament }) {
             />
 
             <h3 className="mt-4 text-xl font-bold">
-              -
+              {statistics?.champion ??
+                statistics?.current_leader ??
+                "-"}
             </h3>
 
             <p className="text-gray-500">
-              Champion
+              {statistics?.champion
+                ? "Champion"
+                : "Current Leader"}
             </p>
 
           </div>

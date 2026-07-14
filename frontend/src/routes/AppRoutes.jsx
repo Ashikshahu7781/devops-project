@@ -18,6 +18,7 @@ import Teams from "../pages/Teams";
 import Fixtures from "../pages/Fixtures";
 import Standings from "../pages/Standings";
 import TournamentDetails from "../pages/TournamentDetails";
+import Account from "../pages/Account/Account";
 
 // import Settings from "../pages/Settings";
 
@@ -73,7 +74,10 @@ function AppRoutes() {
           path="/standings"
           element={<Standings />}
         />
-
+        <Route
+          path="/account"
+          element={<Account />}
+        />
       </Route>
 
     </Routes>
