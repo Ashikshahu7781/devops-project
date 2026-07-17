@@ -1,7 +1,7 @@
-from app.models.fixture import Fixture
 from app.extensions import db
 from app.models.fixture import Fixture
 from app.models.team import Team
+
 
 class FixtureService:
 
@@ -19,12 +19,12 @@ class FixtureService:
             Fixture.round,
             Fixture.id,
         ).all()
-        
+
     @staticmethod
     def generate(tournament_id):
 
         teams = Team.query.filter_by(
-        tournament_id=tournament_id
+            tournament_id=tournament_id
         ).all()
 
         if len(teams) < 2:
@@ -37,38 +37,50 @@ class FixtureService:
 
         db.session.commit()
 
-        fixture_list = []
+        teams = list(teams)
 
-        round_number = 1
+        # Add BYE for odd number of teams
+        if len(teams) % 2 == 1:
+            teams.append(None)
 
-        for i in range(len(teams)):
+        n = len(teams)
+        rounds = n - 1
+        half = n // 2
 
-                for j in range(i + 1, len(teams)):
+        fixtures = []
 
-                    fixture = Fixture(
+        for round_number in range(1, rounds + 1):
 
+            for i in range(half):
+
+                home = teams[i]
+                away = teams[n - 1 - i]
+
+                if home is None or away is None:
+                    continue
+
+                fixtures.append(
+                    Fixture(
                         tournament_id=tournament_id,
-
                         round=round_number,
-
-                        home_team_id=teams[i].id,
-
-                        away_team_id=teams[j].id,
-
+                        home_team_id=home.id,
+                        away_team_id=away.id,
                         status="scheduled",
-
                     )
+                )
 
-                    fixture_list.append(fixture)
+            # Rotate teams (Circle Method)
+            teams = (
+                [teams[0]]
+                + [teams[-1]]
+                + teams[1:-1]
+            )
 
-                    round_number += 1
-
-        db.session.add_all(fixture_list)
-
+        db.session.add_all(fixtures)
         db.session.commit()
 
         return True
-    
+
     @staticmethod
     def update_score(
         fixture_id,
