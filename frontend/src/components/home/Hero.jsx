@@ -1,85 +1,126 @@
 import { ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
-import {
-  heroBanner,
-} from "../../assets/images";
+import { heroBanner } from "../../assets/images";
 
 import Container from "../ui/Container";
 import Button from "../ui/Button";
 import Badge from "../ui/Badge";
 
 function Hero() {
+  const navigate = useNavigate();
+
+  const handleGetStarted = () => {
+    const token = localStorage.getItem("access_token");
+
+    navigate(token ? "/dashboard" : "/login");
+  };
+
+  const handleViewSource = () => {
+    window.open(
+      "https://github.com/Ashikshahu7781/devops-project.git",
+      "_blank"
+    );
+  };
+
   return (
-    <section className="bg-[#F8F7F4] py-20">
-      <Container>
+    <section className="relative overflow-hidden py-20 bg-[#F8F7F4]">
 
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+      {/* Animated Gradient Mesh */}
 
-          {/* Left */}
+      <div className="absolute inset-0 overflow-hidden">
 
-          <div>
+        <div className="mesh mesh-1"></div>
+
+        <div className="mesh mesh-2"></div>
+
+        <div className="mesh mesh-3"></div>
+
+        <div className="mesh mesh-4"></div>
+
+      </div>
+
+      {/* Content */}
+
+      <div className="relative z-10">
+
+        <Container>
+
+          <div className="max-w-5xl mx-auto text-center">
 
             <Badge>
-              🏆 The Future of Tournament Management
+               Professional Tournament Management Platform
             </Badge>
 
             <h1 className="mt-8 text-5xl lg:text-7xl font-extrabold leading-tight text-slate-900">
-              From Registration
-              <br />
 
-              to
+              One Platform.
+
+              <br />
 
               <span className="text-[#556B2F]">
-                {" "}
-                Championship
+                Every Tournament.
               </span>
 
-              <br />
-
-              Manage Everything
-
-              <br />
-
-              in One Place.
             </h1>
 
-            <p className="mt-8 text-xl text-slate-600 leading-8">
-              Manage tournaments, schedule fixtures,
-              register teams, monitor live standings,
-              and organize every competition from a
-              single modern platform.
+            <p className="mt-8 text-xl text-slate-600 leading-9 max-w-3xl mx-auto">
+
+              Simplify tournament management with automated fixtures,
+              live standings, team registration, and intuitive dashboards—
+              everything you need to organize successful competitions.
+
             </p>
 
-            <div className="mt-12 flex gap-5">
+            <div className="mt-12 flex flex-wrap justify-center gap-5">
 
-              <Button>
-                Create Tournament
+              <Button onClick={handleGetStarted}>
+
+                Get Started
+
                 <ArrowRight size={18} />
+
               </Button>
 
-              <Button variant="secondary">
-                View Live Demo
+              <Button
+                variant="secondary"
+                onClick={handleViewSource}
+              >
+
+                View Source
+
               </Button>
+
+            </div>
+
+            <div className="mt-20">
+
+              <img
+                src={heroBanner}
+                alt="SportsTracker Dashboard"
+                className="
+                  mx-auto
+                  w-full
+                  max-w-6xl
+                  rounded-3xl
+                  border
+                  border-stone-200
+                  shadow-2xl
+                  object-cover
+                  transition-all
+                  duration-500
+                  hover:scale-[1.02]
+                "
+              />
 
             </div>
 
           </div>
 
-          {/* Right */}
+        </Container>
 
-          <div>
+      </div>
 
-            <img
-              src={heroBanner}
-              alt="SportsTracker Hero"
-              className="rounded-3xl shadow-2xl w-full object-cover"
-            />
-
-          </div>
-
-        </div>
-
-      </Container>
     </section>
   );
 }

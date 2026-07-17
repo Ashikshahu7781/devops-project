@@ -7,10 +7,11 @@ import AuthLayout from "../../components/layout/AuthLayout";
 import Input from "../../components/ui/Input";
 import PasswordInput from "../../components/ui/PasswordInput";
 import Button from "../../components/ui/Button";
+import useToast from "../../hooks/useToast";
 
 function Register() {
   const navigate = useNavigate();
-
+  const toast = useToast();
   const [formData, setFormData] = useState({
     full_name: "",
     email: "",
@@ -33,7 +34,7 @@ function Register() {
     e.preventDefault();
 
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match");
+      toast.error("Passwords do not match");
       return;
     }
 
@@ -46,15 +47,17 @@ function Register() {
         password: formData.password,
       });
 
-      alert(response.message);
+     toast.success("Account created successfully.");
 
-      navigate("/login");
+      setTimeout(() => {
+        navigate("/login");
+      }, 1200);
 
     } catch (error) {
 
-      alert(
+      toast.error(
         error.response?.data?.message ||
-        "Registration failed"
+        "Registration failed."
       );
 
     } finally {
@@ -67,24 +70,22 @@ function Register() {
       <div
         className="
           w-full
-          max-w-md
           rounded-3xl
           border
-          border-white/20
-          bg-black/35
-          backdrop-blur-xl
-          shadow-2xl
+          border-stone-200
+          bg-white
+          shadow-xl
           p-8
-          text-white
+          text-slate-900
         "
       >
         <h1 className="text-4xl font-extrabold text-center">
-          Sports<span className="text-[#84A83A]">Tracker</span>
+          Sports<span className="text-[#556B2F]">Tracker</span>
         </h1>
 
-        <p className="mt-5 text-center text-white/90">
+        <p className="mt-5 text-center text-slate-600">
           Create your account and start managing tournaments
-          like a professional.
+          with confidence.
         </p>
 
         <form
@@ -92,7 +93,6 @@ function Register() {
           className="mt-10 space-y-6"
         >
           <Input
-            dark
             id="full_name"
             label="Full Name"
             placeholder="Enter your full name"
@@ -102,7 +102,6 @@ function Register() {
           />
 
           <Input
-            dark
             id="email"
             label="Email"
             type="email"
@@ -113,7 +112,6 @@ function Register() {
           />
 
           <PasswordInput
-            dark
             id="password"
             label="Password"
             placeholder="Create a password"
@@ -123,7 +121,6 @@ function Register() {
           />
 
           <PasswordInput
-            dark
             id="confirmPassword"
             label="Confirm Password"
             placeholder="Confirm your password"

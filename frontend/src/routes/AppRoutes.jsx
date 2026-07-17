@@ -20,25 +20,42 @@ import Standings from "../pages/Standings";
 import TournamentDetails from "../pages/TournamentDetails";
 import Account from "../pages/Account/Account";
 
-// import Settings from "../pages/Settings";
-
 function AppRoutes() {
   return (
     <Routes>
 
       {/* Public Website */}
 
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path="about" element={<About />} />
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
+      <Route element={<Layout />}>
 
         <Route
-          path="tournaments/:id"
+          path="/"
+          element={<Home />}
+        />
+
+        <Route
+          path="/about"
+          element={<About />}
+        />
+
+        <Route
+          path="/tournaments/:id"
           element={<TournamentDetails />}
         />
+
       </Route>
+
+      {/* Authentication */}
+
+      <Route
+        path="/login"
+        element={<Login />}
+      />
+
+      <Route
+        path="/register"
+        element={<Register />}
+      />
 
       {/* Protected Dashboard */}
 
@@ -74,10 +91,12 @@ function AppRoutes() {
           path="/standings"
           element={<Standings />}
         />
+
         <Route
           path="/account"
           element={<Account />}
         />
+
       </Route>
 
     </Routes>

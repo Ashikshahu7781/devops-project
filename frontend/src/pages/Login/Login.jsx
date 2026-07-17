@@ -8,10 +8,10 @@ import Input from "../../components/ui/Input";
 import PasswordInput from "../../components/ui/PasswordInput";
 import Checkbox from "../../components/ui/Checkbox";
 import Button from "../../components/ui/Button";
-
+import useToast from "../../hooks/useToast";
 function Login() {
   const navigate = useNavigate();
-
+  const toast = useToast();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -49,15 +49,19 @@ function Login() {
         JSON.stringify(response.data.user)
       );
 
-      alert(response.message);
+      toast.success(response.message || "Login successful.");
+      
+      toast.success("Welcome back!");
 
-      navigate("/dashboard");
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 800);
 
     } catch (error) {
 
-      alert(
+      toast.error(
         error.response?.data?.message ||
-        "Login failed"
+        "Login failed."
       );
 
     } finally {
@@ -70,24 +74,22 @@ function Login() {
       <div
         className="
           w-full
-          max-w-md
           rounded-3xl
           border
-          border-white/20
-          bg-black/35
-          backdrop-blur-xl
-          shadow-2xl
+          border-stone-200
+          bg-white
+          shadow-xl
           p-8
-          text-white
-        "
+          text-slate-900
+          "
       >
         <h1 className="text-4xl font-extrabold text-center">
-          Sports<span className="text-[#84A83A]">Tracker</span>
+          Sports<span className="text-[#556B2F]">Tracker</span>
         </h1>
 
-        <p className="mt-5 text-center text-white/90">
-          Organize tournaments, manage teams,
-          generate fixtures and crown champions.
+        <p className="mt-5 text-center text-slate-600">
+          Welcome back! Sign in to manage your tournaments,
+          teams, fixtures and standings.
         </p>
 
         <form
@@ -95,7 +97,6 @@ function Login() {
           className="mt-8 space-y-6"
         >
           <Input
-            dark
             id="email"
             label="Email"
             type="email"
@@ -106,7 +107,6 @@ function Login() {
           />
 
           <PasswordInput
-            dark
             id="password"
             label="Password"
             placeholder="Enter your password"
