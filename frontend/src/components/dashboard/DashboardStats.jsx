@@ -23,7 +23,7 @@ function DashboardStats() {
 
       const response = await getDashboard();
 
-      const data = dashboard;
+      const data = response;
 
       setStats([
         {

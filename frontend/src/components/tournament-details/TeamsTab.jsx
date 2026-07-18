@@ -14,6 +14,8 @@ import TeamList from "../teams/TeamList";
 import CreateTeamModal from "../teams/CreateTeamModal";
 import EditTeamModal from "../teams/EditTeamModal";
 
+import { useToast } from "../../context/ToastContext";
+
 function TeamsTab({ tournamentId }) {
   const [teams, setTeams] = useState([]);
 
@@ -22,18 +24,29 @@ function TeamsTab({ tournamentId }) {
 
   const [selectedTeam, setSelectedTeam] = useState(null);
 
+  const toast = useToast();
+
   const fetchTeams = async () => {
     try {
-      const response = await getTeams(tournamentId);
+      const data = await getTeams(tournamentId);
 
-      setTeams(response.data);
+      setTeams(data.data || []);
     } catch (error) {
       console.error(error);
+
+      toast.error(
+        error.response?.data?.message ||
+          "Failed to load teams."
+      );
+
+      setTeams([]);
     }
   };
 
   useEffect(() => {
-    fetchTeams();
+    if (tournamentId) {
+      fetchTeams();
+    }
   }, [tournamentId]);
 
   const handleCreate = async (team) => {
@@ -47,8 +60,14 @@ function TeamsTab({ tournamentId }) {
 
       setShowCreateModal(false);
 
+      toast.success("Team created successfully!");
     } catch (error) {
       console.error(error);
+
+      toast.error(
+        error.response?.data?.message ||
+          "Failed to create team."
+      );
     }
   };
 
@@ -69,13 +88,18 @@ function TeamsTab({ tournamentId }) {
       setShowEditModal(false);
       setSelectedTeam(null);
 
+      toast.success("Team updated successfully!");
     } catch (error) {
       console.error(error);
+
+      toast.error(
+        error.response?.data?.message ||
+          "Failed to update team."
+      );
     }
   };
 
   const handleDelete = async (id) => {
-
     const confirmed = window.confirm(
       "Delete this team?"
     );
@@ -83,24 +107,24 @@ function TeamsTab({ tournamentId }) {
     if (!confirmed) return;
 
     try {
-
       await deleteTeam(id);
 
       await fetchTeams();
 
+      toast.success("Team deleted successfully!");
     } catch (error) {
-
       console.error(error);
 
+      toast.error(
+        error.response?.data?.message ||
+          "Failed to delete team."
+      );
     }
-
   };
 
   return (
     <div className="mt-8">
-
       <div className="flex justify-between items-center mb-6">
-
         <h2 className="text-2xl font-bold">
           Teams
         </h2>
@@ -111,7 +135,6 @@ function TeamsTab({ tournamentId }) {
           <Plus size={18} />
           Create Team
         </Button>
-
       </div>
 
       <TeamList
@@ -137,7 +160,6 @@ function TeamsTab({ tournamentId }) {
         onUpdate={handleUpdate}
         hideTournament={true}
       />
-
     </div>
   );
 }

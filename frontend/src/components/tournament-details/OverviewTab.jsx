@@ -7,41 +7,40 @@ import {
 } from "lucide-react";
 
 import { getTournamentStatistics } from "../../api/statistics";
+import { useToast } from "../../context/ToastContext";
 
 function OverviewTab({ tournament }) {
-
   const [statistics, setStatistics] = useState(null);
 
-  useEffect(() => {
+  const toast = useToast();
 
+  useEffect(() => {
     if (tournament) {
       fetchStatistics();
     }
-
   }, [tournament]);
 
   const fetchStatistics = async () => {
-
     try {
-
-      const response = await getTournamentStatistics(
+      const data = await getTournamentStatistics(
         tournament.id
       );
 
-      setStatistics(response.data.data);
+      setStatistics(data.data || null);
 
     } catch (error) {
-
       console.error(error);
 
+      toast.error(
+        error.response?.data?.message ||
+        "Failed to load tournament statistics."
+      );
     }
-
   };
 
   if (!tournament) return null;
 
   return (
-
     <div className="mt-8 grid lg:grid-cols-2 gap-8">
 
       {/* Tournament Information */}
@@ -56,32 +55,46 @@ function OverviewTab({ tournament }) {
 
           <div className="flex justify-between">
             <span className="text-gray-500">Sport</span>
-            <span className="font-semibold">{tournament.sport}</span>
+            <span className="font-semibold">
+              {tournament.sport}
+            </span>
           </div>
 
           <div className="flex justify-between">
             <span className="text-gray-500">Venue</span>
-            <span className="font-semibold">{tournament.venue}</span>
+            <span className="font-semibold">
+              {tournament.venue}
+            </span>
           </div>
 
           <div className="flex justify-between">
             <span className="text-gray-500">Status</span>
-            <span className="font-semibold">{tournament.status}</span>
+            <span className="font-semibold">
+              {tournament.status}
+            </span>
           </div>
 
           <div className="flex justify-between">
             <span className="text-gray-500">Start Date</span>
-            <span className="font-semibold">{tournament.start_date}</span>
+            <span className="font-semibold">
+              {tournament.start_date}
+            </span>
           </div>
 
           <div className="flex justify-between">
             <span className="text-gray-500">End Date</span>
-            <span className="font-semibold">{tournament.end_date}</span>
+            <span className="font-semibold">
+              {tournament.end_date}
+            </span>
           </div>
 
           <div className="flex justify-between">
-            <span className="text-gray-500">Maximum Teams</span>
-            <span className="font-semibold">{tournament.max_teams}</span>
+            <span className="text-gray-500">
+              Maximum Teams
+            </span>
+            <span className="font-semibold">
+              {tournament.max_teams}
+            </span>
           </div>
 
         </div>
@@ -123,8 +136,8 @@ function OverviewTab({ tournament }) {
             />
 
             <h3 className="mt-4 text-3xl font-bold">
-              {statistics?.completed_matches ?? 0} /
-              {" "}
+              {statistics?.completed_matches ?? 0}
+              {" / "}
               {statistics?.total_matches ?? 0}
             </h3>
 
@@ -177,9 +190,7 @@ function OverviewTab({ tournament }) {
       </div>
 
     </div>
-
   );
-
 }
 
 export default OverviewTab;
