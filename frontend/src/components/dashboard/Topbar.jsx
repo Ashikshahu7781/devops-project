@@ -26,9 +26,9 @@ function Topbar({ sidebarOpen, setSidebarOpen }) {
   });
 
   return (
-    <header className="h-auto min-h-20 bg-white border-b border-stone-200 px-4 md:px-8 py-4 flex items-center justify-between">
+    <header className="bg-white border-b border-stone-200 px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
 
-      {/* Left */}
+      {/* Left Section */}
       <div className="flex items-center gap-4">
 
         {/* Mobile Menu Button */}
@@ -40,22 +40,21 @@ function Topbar({ sidebarOpen, setSidebarOpen }) {
         </button>
 
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold text-slate-900">
+          <h1 className="text-2xl lg:text-3xl font-bold text-slate-900">
             Dashboard
           </h1>
 
-          <p className="text-sm md:text-base text-slate-500">
+          <p className="text-sm lg:text-base text-slate-500">
             Welcome back to SportsTracker
           </p>
         </div>
 
       </div>
 
-      {/* Right */}
-      <div className="hidden md:flex items-center gap-8">
+      {/* Right Section */}
+      <div className="hidden md:flex items-center gap-6">
 
         <div className="flex items-center gap-2 text-slate-600">
-
           <CalendarDays
             size={20}
             className="text-[#556B2F]"
@@ -64,11 +63,9 @@ function Topbar({ sidebarOpen, setSidebarOpen }) {
           <span className="font-medium">
             {currentDate}
           </span>
-
         </div>
 
         <div className="flex items-center gap-2 text-slate-600">
-
           <Clock
             size={20}
             className="text-[#556B2F]"
@@ -77,7 +74,6 @@ function Topbar({ sidebarOpen, setSidebarOpen }) {
           <span className="font-semibold">
             {currentTime}
           </span>
-
         </div>
 
       </div>

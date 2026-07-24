@@ -65,8 +65,7 @@ function Sidebar({ closeSidebar }) {
       {/* Logo */}
       <div className="p-8 border-b border-gray-700">
         <h1 className="text-3xl font-bold">
-          Sports
-          <span className="text-[#84A83A]">Tracker</span>
+          Sports<span className="text-[#84A83A]">Tracker</span>
         </h1>
       </div>
 
