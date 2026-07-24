@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { CalendarDays, Clock } from "lucide-react";
+import { CalendarDays, Clock, Menu } from "lucide-react";
 
-function Topbar() {
+function Topbar({ sidebarOpen, setSidebarOpen }) {
   const [dateTime, setDateTime] = useState(new Date());
 
   useEffect(() => {
@@ -26,25 +26,33 @@ function Topbar() {
   });
 
   return (
-    <header className="h-20 bg-white border-b border-stone-200 px-8 flex items-center justify-between">
+    <header className="h-auto min-h-20 bg-white border-b border-stone-200 px-4 md:px-8 py-4 flex items-center justify-between">
 
       {/* Left */}
+      <div className="flex items-center gap-4">
 
-      <div>
+        {/* Mobile Menu Button */}
+        <button
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+          className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition"
+        >
+          <Menu size={26} />
+        </button>
 
-        <h1 className="text-3xl font-bold text-slate-900">
-          Dashboard
-        </h1>
+        <div>
+          <h1 className="text-2xl md:text-3xl font-bold text-slate-900">
+            Dashboard
+          </h1>
 
-        <p className="text-slate-500">
-          Welcome back to SportsTracker
-        </p>
+          <p className="text-sm md:text-base text-slate-500">
+            Welcome back to SportsTracker
+          </p>
+        </div>
 
       </div>
 
       {/* Right */}
-
-      <div className="flex items-center gap-8">
+      <div className="hidden md:flex items-center gap-8">
 
         <div className="flex items-center gap-2 text-slate-600">
 

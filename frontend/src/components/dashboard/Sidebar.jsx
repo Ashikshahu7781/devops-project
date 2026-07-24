@@ -37,13 +37,13 @@ const menuItems = [
     path: "/standings",
   },
   {
-  title: "My Account",
-  icon: User,
-  path: "/account",
+    title: "My Account",
+    icon: User,
+    path: "/account",
   },
 ];
 
-function Sidebar() {
+function Sidebar({ closeSidebar }) {
   const navigate = useNavigate();
 
   const user = JSON.parse(localStorage.getItem("user"));
@@ -52,16 +52,21 @@ function Sidebar() {
     localStorage.removeItem("access_token");
     localStorage.removeItem("user");
 
+    if (closeSidebar) {
+      closeSidebar();
+    }
+
     navigate("/login", { replace: true });
   };
 
   return (
-    <aside className="w-72 bg-[#1F2937] text-white flex flex-col">
+    <aside className="w-72 h-screen bg-[#1F2937] text-white flex flex-col shadow-xl">
 
       {/* Logo */}
       <div className="p-8 border-b border-gray-700">
         <h1 className="text-3xl font-bold">
-          Sports<span className="text-[#84A83A]">Tracker</span>
+          Sports
+          <span className="text-[#84A83A]">Tracker</span>
         </h1>
       </div>
 
@@ -71,7 +76,7 @@ function Sidebar() {
           Logged in as
         </p>
 
-        <h2 className="text-lg font-semibold mt-1">
+        <h2 className="text-lg font-semibold mt-1 truncate">
           {user?.full_name || "User"}
         </h2>
 
@@ -81,7 +86,7 @@ function Sidebar() {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 p-6 space-y-2">
+      <nav className="flex-1 p-6 space-y-2 overflow-y-auto">
         {menuItems.map((item) => {
           const Icon = item.icon;
 
@@ -89,8 +94,13 @@ function Sidebar() {
             <NavLink
               key={item.title}
               to={item.path}
+              onClick={() => {
+                if (closeSidebar) {
+                  closeSidebar();
+                }
+              }}
               className={({ isActive }) =>
-                `flex items-center gap-4 px-4 py-3 rounded-xl transition ${
+                `flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200 ${
                   isActive
                     ? "bg-[#556B2F]"
                     : "hover:bg-gray-700"
@@ -98,7 +108,7 @@ function Sidebar() {
               }
             >
               <Icon size={20} />
-              {item.title}
+              <span>{item.title}</span>
             </NavLink>
           );
         })}
@@ -108,10 +118,10 @@ function Sidebar() {
       <div className="p-6 border-t border-gray-700">
         <button
           onClick={handleLogout}
-          className="w-full flex items-center gap-4 px-4 py-3 rounded-xl text-red-400 hover:bg-red-500/10 transition"
+          className="w-full flex items-center gap-4 px-4 py-3 rounded-xl text-red-400 hover:bg-red-500/10 transition-all duration-200"
         >
           <LogOut size={20} />
-          Logout
+          <span>Logout</span>
         </button>
       </div>
 
