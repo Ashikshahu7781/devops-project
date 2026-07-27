@@ -15,7 +15,7 @@ function StatusBadge({ status }) {
 
   return (
     <span
-      className={`inline-flex rounded-full px-3 py-1 text-sm font-semibold ${
+      className={`inline-flex items-center whitespace-nowrap rounded-full px-2.5 sm:px-3 py-1 text-xs sm:text-sm font-semibold ${
         styles[status] || styles.upcoming
       }`}
     >

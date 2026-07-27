@@ -14,12 +14,12 @@ function Button({
 
     ghost:
       "text-[#556B2F] hover:bg-[#556B2F]/10",
-      
+
     danger:
       "bg-red-600 text-white hover:bg-red-700",
 
     white:
-    "bg-white text-[#556B2F] hover:bg-gray-100 shadow-md",
+      "bg-white text-[#556B2F] hover:bg-gray-100 shadow-md",
   };
 
   return (
@@ -31,12 +31,18 @@ function Button({
         justify-center
         gap-2
         rounded-xl
-        px-6
-        py-3
+        px-4
+        sm:px-6
+        py-2.5
+        sm:py-3
+        text-sm
+        sm:text-base
         font-semibold
         transition-all
         duration-300
         cursor-pointer
+        disabled:opacity-60
+        disabled:cursor-not-allowed
         ${variants[variant] || variants.primary}
         ${className}
       `}

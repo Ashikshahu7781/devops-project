@@ -19,7 +19,7 @@ function TournamentList({
   }
 
   return (
-    <div className="grid gap-6">
+    <div className="space-y-4 sm:space-y-6">
       {tournaments.map((tournament) => (
         <TournamentCard
           key={tournament.id}

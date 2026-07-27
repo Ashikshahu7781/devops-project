@@ -45,47 +45,45 @@ const steps = [
 
 function HowItWorks() {
   return (
-    <section className="py-24 bg-[#F8F7F4]">
+    <section className="py-14 sm:py-16 lg:py-24 bg-[#F8F7F4]">
       <Container>
-
         <SectionHeading
           badge="HOW IT WORKS"
           title="Manage Your Tournament in Five Simple Steps"
           description="Everything from registration to the championship happens inside SportsTracker."
         />
 
-        <div className="mt-16 grid md:grid-cols-2 lg:grid-cols-5 gap-6">
+        <div className="mt-10 sm:mt-12 lg:mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 sm:gap-6">
           {steps.map((step, index) => {
             const Icon = step.icon;
 
             return (
               <Card
                 key={step.title}
-                className="text-center relative"
+                className="relative text-center h-full"
               >
                 <div className="absolute -top-3 right-4 bg-[#556B2F] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold">
                   {index + 1}
                 </div>
 
-                <div className="w-16 h-16 mx-auto rounded-2xl bg-[#556B2F]/10 flex items-center justify-center">
+                <div className="w-14 h-14 sm:w-16 sm:h-16 mx-auto rounded-2xl bg-[#556B2F]/10 flex items-center justify-center">
                   <Icon
-                    size={32}
-                    className="text-[#556B2F]"
+                    size={28}
+                    className="text-[#556B2F] sm:w-8 sm:h-8"
                   />
                 </div>
 
-                <h3 className="mt-6 font-bold text-xl">
+                <h3 className="mt-5 sm:mt-6 text-lg sm:text-xl font-bold">
                   {step.title}
                 </h3>
 
-                <p className="mt-4 text-slate-600 leading-7">
+                <p className="mt-3 sm:mt-4 text-sm sm:text-base text-slate-600 leading-6 sm:leading-7">
                   {step.description}
                 </p>
               </Card>
             );
           })}
         </div>
-
       </Container>
     </section>
   );

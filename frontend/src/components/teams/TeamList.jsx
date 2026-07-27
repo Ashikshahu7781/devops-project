@@ -8,7 +8,6 @@ function TeamList({
   onEdit,
   onDelete,
 }) {
-
   if (teams.length === 0) {
     return (
       <EmptyState
@@ -20,19 +19,15 @@ function TeamList({
   }
 
   return (
-    <div className="grid gap-6">
-
+    <div className="space-y-4 sm:space-y-6">
       {teams.map((team) => (
-
         <TeamCard
           key={team.id}
           team={team}
           onEdit={onEdit}
           onDelete={onDelete}
         />
-
       ))}
-
     </div>
   );
 }

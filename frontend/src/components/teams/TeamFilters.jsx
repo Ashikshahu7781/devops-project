@@ -5,14 +5,14 @@ function TeamFilters({
   onSearchChange,
 }) {
   return (
-    <div className="mb-8">
-
-      <SearchInput
-        placeholder="Search teams..."
-        value={searchTerm}
-        onChange={onSearchChange}
-      />
-
+    <div className="mb-6 sm:mb-8">
+      <div className="w-full">
+        <SearchInput
+          placeholder="Search teams..."
+          value={searchTerm}
+          onChange={onSearchChange}
+        />
+      </div>
     </div>
   );
 }

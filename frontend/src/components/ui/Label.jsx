@@ -7,7 +7,7 @@ function Label({
   return (
     <label
       htmlFor={htmlFor}
-      className={`block mb-2 text-sm font-semibold ${
+      className={`block mb-2 text-sm font-semibold break-words ${
         dark ? "text-white" : "text-slate-700"
       }`}
     >

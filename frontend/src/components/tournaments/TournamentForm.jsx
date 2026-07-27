@@ -12,7 +12,7 @@ function TournamentForm({
   return (
     <form
       onSubmit={onSubmit}
-      className="space-y-6"
+      className="space-y-5 sm:space-y-6"
     >
       <Input
         id="name"
@@ -32,7 +32,7 @@ function TournamentForm({
         onChange={onChange}
       />
 
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
         <Select
           id="sport"
           label="Sport"
@@ -58,7 +58,7 @@ function TournamentForm({
         />
       </div>
 
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
         <Input
           id="startDate"
           type="date"
@@ -78,7 +78,7 @@ function TournamentForm({
         />
       </div>
 
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
         <Input
           id="maxTeams"
           type="number"
@@ -103,8 +103,11 @@ function TournamentForm({
         />
       </div>
 
-      <div className="flex justify-end pt-4">
-        <Button type="submit">
+      <div className="flex flex-col sm:flex-row sm:justify-end pt-2 sm:pt-4">
+        <Button
+          type="submit"
+          className="w-full sm:w-auto"
+        >
           {submitText}
         </Button>
       </div>

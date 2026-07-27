@@ -22,9 +22,9 @@ const stats = [
 
 function Statistics() {
   return (
-    <section className="py-20 bg-white">
+    <section className="py-14 sm:py-16 lg:py-20 bg-white">
       <Container>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {stats.map((stat) => (
             <StatCard
               key={stat.label}

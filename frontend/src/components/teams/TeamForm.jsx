@@ -13,9 +13,8 @@ function TeamForm({
   return (
     <form
       onSubmit={onSubmit}
-      className="space-y-6"
+      className="space-y-5 sm:space-y-6"
     >
-
       {!hideTournament && (
         <Select
           id="tournament_id"
@@ -45,8 +44,7 @@ function TeamForm({
         required
       />
 
-      <div className="grid md:grid-cols-2 gap-6">
-
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
         <Input
           id="coach"
           label="Coach"
@@ -64,11 +62,9 @@ function TeamForm({
           onChange={onChange}
           required
         />
-
       </div>
 
-      <div className="grid md:grid-cols-2 gap-6">
-
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
         <Input
           id="contact_email"
           type="email"
@@ -87,7 +83,6 @@ function TeamForm({
           onChange={onChange}
           required
         />
-
       </div>
 
       <Input
@@ -98,12 +93,14 @@ function TeamForm({
         onChange={onChange}
       />
 
-      <div className="flex justify-end pt-4">
-        <Button type="submit">
+      <div className="flex flex-col sm:flex-row sm:justify-end pt-2 sm:pt-4">
+        <Button
+          type="submit"
+          className="w-full sm:w-auto"
+        >
           {submitText}
         </Button>
       </div>
-
     </form>
   );
 }

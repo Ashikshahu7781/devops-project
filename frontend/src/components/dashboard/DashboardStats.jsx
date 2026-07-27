@@ -10,7 +10,6 @@ import {
 import { getDashboard } from "../../api/dashboard";
 
 function DashboardStats() {
-
   const [stats, setStats] = useState([]);
 
   useEffect(() => {
@@ -18,11 +17,8 @@ function DashboardStats() {
   }, []);
 
   const fetchDashboard = async () => {
-
     try {
-
       const response = await getDashboard();
-
       const data = response;
 
       setStats([
@@ -51,64 +47,46 @@ function DashboardStats() {
           color: "bg-purple-100 text-purple-700",
         },
       ]);
-
     } catch (error) {
-
       console.error(error);
-
     }
-
   };
 
   return (
-
-    <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-
+    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6">
       {stats.map((stat) => {
-
         const Icon = stat.icon;
 
         return (
-
           <div
             key={stat.title}
-            className="rounded-2xl bg-white p-6 shadow-sm border border-stone-200"
+            className="rounded-2xl bg-white p-5 sm:p-6 shadow-sm border border-stone-200"
           >
-
-            <div className="flex justify-between items-center">
-
-              <div>
-
-                <p className="text-slate-500">
+            <div className="flex items-center justify-between">
+              <div className="min-w-0">
+                <p className="text-sm sm:text-base text-slate-500">
                   {stat.title}
                 </p>
 
-                <h2 className="text-4xl font-bold mt-2">
+                <h2 className="mt-2 text-3xl sm:text-4xl font-bold break-words">
                   {stat.value}
                 </h2>
-
               </div>
 
               <div
-                className={`h-14 w-14 rounded-xl flex items-center justify-center ${stat.color}`}
+                className={`flex h-12 w-12 sm:h-14 sm:w-14 shrink-0 items-center justify-center rounded-xl ${stat.color}`}
               >
-
-                <Icon size={28} />
-
+                <Icon
+                  size={24}
+                  className="sm:w-7 sm:h-7"
+                />
               </div>
-
             </div>
-
           </div>
-
         );
-
       })}
-
     </div>
-
   );
-
 }
 
 export default DashboardStats;

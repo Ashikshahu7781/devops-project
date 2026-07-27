@@ -38,46 +38,38 @@ const features = [
 
 function Features() {
   return (
-    <section className="py-24 bg-[#F8F7F4]">
+    <section className="py-14 sm:py-16 lg:py-24 bg-[#F8F7F4]">
       <Container>
-
         <SectionHeading
           badge="POWERFUL FEATURES"
           title="Everything You Need to Succeed"
           description="SportsTracker provides all the tools required to organize professional tournaments from registration to championship."
         />
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mt-16">
-
+        <div className="mt-10 sm:mt-12 lg:mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 lg:gap-8">
           {features.map((feature) => {
             const Icon = feature.icon;
 
             return (
               <Card key={feature.title}>
-
-                <div className="w-16 h-16 rounded-2xl bg-[#556B2F]/10 flex items-center justify-center">
-
+                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-[#556B2F]/10 flex items-center justify-center">
                   <Icon
-                    size={32}
-                    className="text-[#556B2F]"
+                    size={28}
+                    className="text-[#556B2F] sm:w-8 sm:h-8"
                   />
-
                 </div>
 
-                <h3 className="mt-8 text-xl font-bold text-slate-900">
+                <h3 className="mt-6 sm:mt-8 text-lg sm:text-xl font-bold text-slate-900">
                   {feature.title}
                 </h3>
 
-                <p className="mt-4 leading-7 text-slate-600">
+                <p className="mt-3 sm:mt-4 text-sm sm:text-base leading-6 sm:leading-7 text-slate-600">
                   {feature.description}
                 </p>
-
               </Card>
             );
           })}
-
         </div>
-
       </Container>
     </section>
   );

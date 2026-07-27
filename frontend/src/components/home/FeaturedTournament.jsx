@@ -28,43 +28,29 @@ function FeaturedTournament() {
     if (paused) return;
 
     const interval = setInterval(() => {
-
       setFade(false);
 
       setTimeout(() => {
-
-        setCurrentIndex((prev) =>
-          (prev + 1) % featuredTournaments.length
+        setCurrentIndex(
+          (prev) => (prev + 1) % featuredTournaments.length
         );
 
         setFade(true);
-
       }, 300);
-
     }, 5000);
 
     return () => clearInterval(interval);
-
   }, [paused]);
 
   const handleViewTournament = () => {
-
     const token = localStorage.getItem("access_token");
 
-    navigate(
-      token
-        ? "/tournaments"
-        : "/login"
-    );
-
+    navigate(token ? "/tournaments" : "/login");
   };
 
   return (
-
-    <section className="py-24 bg-white">
-
+    <section className="py-14 sm:py-16 lg:py-24 bg-white">
       <Container>
-
         <SectionHeading
           badge="FEATURED TOURNAMENT"
           title="Discover Upcoming Championships"
@@ -72,7 +58,7 @@ function FeaturedTournament() {
         />
 
         <div
-          className={`mt-16 transition-all duration-500 ${
+          className={`mt-10 sm:mt-12 lg:mt-16 transition-all duration-500 ${
             fade
               ? "opacity-100 translate-y-0"
               : "opacity-0 translate-y-4"
@@ -80,164 +66,105 @@ function FeaturedTournament() {
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
         >
-
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             {/* Tournament Image */}
-
             <div className="overflow-hidden rounded-3xl shadow-xl">
-
               <img
                 src={tournament.image}
                 alt={tournament.name}
                 className="
                   w-full
-                  h-[520px]
+                  h-64
+                  sm:h-80
+                  md:h-96
+                  lg:h-[520px]
                   object-cover
                   transition-transform
                   duration-700
                   hover:scale-105
                 "
               />
-
             </div>
 
             {/* Tournament Details */}
-
             <Card className="h-full flex flex-col justify-between">
-
               <div>
-
                 <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-semibold">
-
                   <span className="h-2 w-2 rounded-full bg-green-600"></span>
-
                   {tournament.status}
-
                 </div>
 
-                <h3 className="mt-6 text-4xl font-bold text-slate-900">
-
+                <h3 className="mt-6 text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900">
                   {tournament.name}
-
                 </h3>
 
-                <p className="mt-6 text-slate-600 leading-8">
-
+                <p className="mt-5 text-sm sm:text-base text-slate-600 leading-7 sm:leading-8">
                   {tournament.description}
-
                 </p>
 
-                <div className="mt-10 grid grid-cols-2 gap-6">
-
+                <div className="mt-8 sm:mt-10 grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
                   <div className="flex items-center gap-3">
-
-                    <MapPin className="text-[#556B2F]" />
-
+                    <MapPin className="text-[#556B2F] shrink-0" />
                     <div>
-
                       <p className="text-sm text-slate-500">
-
                         Location
-
                       </p>
-
-                      <p className="font-semibold">
-
+                      <p className="font-semibold break-words">
                         {tournament.location}
-
                       </p>
-
                     </div>
-
                   </div>
 
                   <div className="flex items-center gap-3">
-
-                    <Users className="text-[#556B2F]" />
-
+                    <Users className="text-[#556B2F] shrink-0" />
                     <div>
-
                       <p className="text-sm text-slate-500">
-
                         Teams
-
                       </p>
-
                       <p className="font-semibold">
-
                         {tournament.teams}
-
                       </p>
-
                     </div>
-
                   </div>
 
                   <div className="flex items-center gap-3">
-
-                    <CalendarDays className="text-[#556B2F]" />
-
+                    <CalendarDays className="text-[#556B2F] shrink-0" />
                     <div>
-
                       <p className="text-sm text-slate-500">
-
                         Starts
-
                       </p>
-
                       <p className="font-semibold">
-
                         {tournament.startDate}
-
                       </p>
-
                     </div>
-
                   </div>
 
                   <div className="flex items-center gap-3">
-
-                    <Trophy className="text-[#556B2F]" />
-
+                    <Trophy className="text-[#556B2F] shrink-0" />
                     <div>
-
                       <p className="text-sm text-slate-500">
-
                         Prize Pool
-
                       </p>
-
-                      <p className="font-semibold">
-
+                      <p className="font-semibold break-words">
                         {tournament.prize}
-
                       </p>
-
                     </div>
-
                   </div>
-
                 </div>
-
               </div>
 
-              <div className="mt-10">
-
-                <Button onClick={handleViewTournament}>
-
+              <div className="mt-8 sm:mt-10">
+                <Button
+                  onClick={handleViewTournament}
+                  className="w-full sm:w-auto"
+                >
                   Explore Tournament
-
                   <ArrowRight size={18} />
-
                 </Button>
 
                 {/* Indicators */}
-
                 <div className="flex justify-center gap-2 mt-8">
-
                   {featuredTournaments.map((_, index) => (
-
                     <span
                       key={index}
                       className={`rounded-full transition-all duration-500 ${
@@ -246,25 +173,15 @@ function FeaturedTournament() {
                           : "bg-stone-300 w-2 h-2"
                       }`}
                     />
-
                   ))}
-
                 </div>
-
               </div>
-
             </Card>
-
           </div>
-
         </div>
-
       </Container>
-
     </section>
-
   );
-
 }
 
 export default FeaturedTournament;

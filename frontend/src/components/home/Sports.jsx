@@ -35,40 +35,30 @@ const sports = [
 
 function Sports() {
   return (
-    <section className="py-24 bg-white">
-
+    <section className="py-14 sm:py-16 lg:py-24 bg-white">
       <Container>
-
         <SectionHeading
           badge="SPORTS"
           title="Supported Sports"
           description="SportsTracker supports multiple sports with dedicated tournament management tools."
         />
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-8 mt-16">
-
+        <div className="mt-10 sm:mt-12 lg:mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 sm:gap-6 lg:gap-8">
           {sports.map((sport) => (
-
             <Card key={sport.name}>
-
               <img
                 src={sport.image}
                 alt={sport.name}
-                className="rounded-2xl h-48 w-full object-cover"
+                className="w-full h-52 sm:h-56 lg:h-48 rounded-2xl object-cover"
               />
 
-              <h3 className="mt-5 text-xl font-bold">
+              <h3 className="mt-4 sm:mt-5 text-lg sm:text-xl font-bold text-center lg:text-left">
                 {sport.name}
               </h3>
-
             </Card>
-
           ))}
-
         </div>
-
       </Container>
-
     </section>
   );
 }

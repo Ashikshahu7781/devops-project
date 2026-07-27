@@ -10,9 +10,8 @@ function TournamentFilters({
   onStatusChange,
 }) {
   return (
-    <div className="mb-8 flex flex-col gap-4 md:flex-row">
-
-      <div className="flex-1">
+    <div className="mb-6 sm:mb-8 flex flex-col gap-4 lg:flex-row lg:items-center">
+      <div className="w-full lg:flex-1">
         <SearchInput
           placeholder="Search tournaments..."
           value={searchTerm}
@@ -20,7 +19,7 @@ function TournamentFilters({
         />
       </div>
 
-      <div className="md:w-52">
+      <div className="w-full sm:w-64 lg:w-52">
         <Select
           id="sportFilter"
           value={sportFilter}
@@ -36,7 +35,7 @@ function TournamentFilters({
         />
       </div>
 
-      <div className="md:w-52">
+      <div className="w-full sm:w-64 lg:w-52">
         <Select
           id="statusFilter"
           value={statusFilter}
@@ -49,7 +48,6 @@ function TournamentFilters({
           ]}
         />
       </div>
-
     </div>
   );
 }
