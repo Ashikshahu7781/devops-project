@@ -1,51 +1,56 @@
-# 🚀 DevOps Project
+# SportsTracker
 
-A production-ready full-stack web application demonstrating modern DevOps practices using Docker, Jenkins, CI/CD, automated deployments, and security scanning.
+SportsTracker is a full-stack football tournament management platform for managing tournaments, teams, fixtures, match results, and standings.
 
----
+> **Status:** Under Development  
+> **Currently Supported Sport:** Football
 
-## 🚧 Project Status
+## Features
 
-> Currently under active development.
+- User registration and JWT-based login
+- Tournament management
+- Team management
+- Fixture management
+- Football match scoring
+- Automatic football standings
+- Tournament statistics
+- Responsive dashboard
+- User account management
 
----
-
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Frontend
 - React
+- JavaScript
+- Tailwind CSS
+- React Router
+- Axios
+- Lucide React
 - Vite
 
 ### Backend
-- Flask (Python)
+- Python
+- Flask
+- REST API
+- JWT Authentication
 
 ### Database
 - PostgreSQL
 
-### DevOps
-- Git
-- GitHub
+### Deployment
 - Docker
 - Docker Compose
-- Jenkins
-- SonarQube
-- Trivy
 - Nginx
+- AWS EC2
+- Let's Encrypt SSL
+- DuckDNS
 
----
+## Project Structure
 
-## 📌 Planned Features
-
-- Containerized Frontend
-- Containerized Backend
-- PostgreSQL Database
-- Jenkins CI/CD Pipeline
-- Docker Hub Integration
-- Automated Deployment
-- SonarQube Code Analysis
-- Trivy Image Scanning
-- Nginx Reverse Proxy
-- Health Checks
-- Monitoring (Prometheus & Grafana)
-
----
+```text
+SportsTracker/
+├── frontend/
+├── backend/
+├── nginx/
+├── docker-compose.yml
+└── README.md

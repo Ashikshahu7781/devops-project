@@ -5,9 +5,13 @@ services:
       dockerfile: frontend/Dockerfile
     container_name: sportstracker-frontend
     ports:
-      - "8081:80"
+      - "80:80"
+      - "443:443"
     depends_on:
       - backend
+    volumes:
+      - /var/www/certbot:/var/www/certbot
+      - /etc/letsencrypt:/etc/letsencrypt:ro
     restart: always
     networks:
       - sportstracker-network
